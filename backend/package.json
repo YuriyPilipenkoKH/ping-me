@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index"
   },
   "keywords": [],
-  "author": "",
+  "author": "Yuriy",
+  "type": "module",
   "license": "ISC",
-  "description": "",
+  "description": "ping-me api",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.5.1",

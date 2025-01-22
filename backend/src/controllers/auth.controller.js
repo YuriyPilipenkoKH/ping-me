@@ -1,9 +1,16 @@
 export const signup = (req, res) => {
-  res.send('signup route');
+  const{ name, email, password } = req.body;
+  try {
+    
+  } catch (error) {
+    
+  }
 }
+
 export const login = (req, res) => {
   res.send('login route');
 }
+
 export const logout = (req, res) => {
   res.send('logout route');
 }

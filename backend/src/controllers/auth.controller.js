@@ -15,10 +15,15 @@ export const signup = async(req, res) => {
     if(user) {
       return res.status(400).json({message: 'User already exists'});
     }
-    const newUser = new User({ 
+    // Create a new user
+    const newUser = new User({
       name,
-      email, 
-      password: hashedPassword });
+      email,
+      password: hashedPassword,
+    });
+    await newUser.save();
+  // Send a success response
+  return res.status(201).json({ message: 'User created successfully', user: newUser })
   } catch (error) {
     
   }

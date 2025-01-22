@@ -20,4 +20,13 @@ const userShema = new mongoose.Schema({
       required: false,
       default: 'https://via.placeholder.com/150'
     },
-})
+    role: { 
+      type: String, 
+      required: true,
+      default: 'user'
+    },
+  },
+  { timestamps: true }
+)
+const User = mongoose.model('User', userShema)
+export default User

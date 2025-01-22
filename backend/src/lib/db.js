@@ -2,11 +2,7 @@ import mongoose from 'mongoose';
 
 export default async function connectDB() {
   try {
-    const conn = await mongoose.connect(process.env.DATABASE_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    });
+    const conn = await mongoose.connect(process.env.DATABASE_URL);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error(`Error: ${error.message}`);

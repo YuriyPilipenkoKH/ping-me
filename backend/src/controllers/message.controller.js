@@ -37,7 +37,9 @@ export const getMessages =  async (req,res) => {
 export const sendMessage =  async (req,res) => {
   try {
     
-  } catch (error) {
     
+  } catch (error) {
+    console.log("error in sendMessage");
+    return res.status(500).json({ message: 'Server error' });
   }
 }

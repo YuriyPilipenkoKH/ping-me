@@ -18,7 +18,7 @@ const userShema = new mongoose.Schema({
     image: { 
       type: String, 
       required: false,
-      default: 'https://via.placeholder.com/150'
+      default: 'https://res.cloudinary.com/dwdkw1a4j/image/upload/v1737611567/ping-me/placholder/sj9iagyup0vjtszujhsf.svg'
     },
     role: { 
       type: String, 

@@ -49,13 +49,39 @@ export const signup = async(req, res) => {
   }
 }
 
-export const login = (req, res) => {
-  const { email, password } = req.body;
-  if(!email || !password) {
-    return res.status(400).json({message: 'Please fill in all fields'});
-  }
-  try {
-    
+export const login = async(req, res) => {
+    const { email, password } = req.body;
+    console.log(email, password);
+    if(!email || !password) {
+      return res.status(400).json({message: 'Please fill in all fields'});
+    }
+    if(password.length < 4) {
+      return res.status(400).json({message: 'Password must be at least 4 characters long'})
+    }
+    try {
+      const user = await User.findOne({ email });
+      if(!user) {
+        return res.status(400).json({message: 'Invalid credentials'});
+      }
+    // Check if the password is correct
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ message: 'Invalid credentials' });
+      }
+      generateToken(user._id, res);
+
+
+
+      return res.status(200).json({ 
+        message: 'User logged in successfully', 
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          image: user.image,
+          role: user.role,
+        } 
+      });
   } catch (error) {
     console.log('Error in user login', error);
     return res.status(500).json({ message: 'Server error' });
@@ -64,5 +90,12 @@ export const login = (req, res) => {
 }
 
 export const logout = (req, res) => {
-  res.send('logout route');
+  try {
+    res.clearCookie('ping-token');
+    return res.status(200).json({ message: 'User logged out successfully' });  
+  } catch (error) {
+    console.log('Error in user logout', error);
+    return res.status(500).json({ message: 'Server error' });
+    
+  }
 }

@@ -89,7 +89,7 @@ export const login = async(req, res) => {
   }
 }
 
-export const logout = (req, res) => {
+export const logout = () => {
   try {
     res.clearCookie('ping-token', {maxAge: 0});
     return res.status(200).json({ message: 'User logged out successfully' });  
@@ -98,4 +98,8 @@ export const logout = (req, res) => {
     return res.status(500).json({ message: 'Server error' });
     
   }
+}
+
+export const updateProfile = async(req, res) => {
+
 }

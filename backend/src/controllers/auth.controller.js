@@ -21,9 +21,17 @@ export const signup = async(req, res) => {
       email,
       password: hashedPassword,
     });
-    await newUser.save();
-  // Send a success response
-  return res.status(201).json({ message: 'User created successfully', user: newUser })
+    if (newUser) {
+
+
+
+      await newUser.save();
+      return res.status(201).json({ message: 'User created successfully', user: newUser })
+    }
+    else{
+      return res.status(400).json({ message: 'Invalid user data' });
+
+    }
   } catch (error) {
     
   }

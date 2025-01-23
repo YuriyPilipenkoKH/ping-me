@@ -26,7 +26,12 @@ export const signup = async(req, res) => {
     if (newUser) {
       generateToken(newUser._id, res);
       await newUser.save();
-      return res.status(201).json({ message: 'User created successfully', user: newUser })
+      const { password, ...plainUser } = newUser
+      return res.status(201).json(
+        {
+           message: 'User created successfully',
+           user: plainUser
+          })
     }
     else{
       return res.status(400).json({ message: 'Invalid user data' });

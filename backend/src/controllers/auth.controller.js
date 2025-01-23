@@ -4,6 +4,9 @@ import generateToken from '../lib/utils.js';
 
 export const signup = async(req, res) => {
   const{ name, email, password } = req.body;
+  if(!name || !email || !password) {
+    return res.status(400).json({message: 'Please fill in all fields'});
+  }
 
   try {
     //hash password
@@ -26,7 +29,10 @@ export const signup = async(req, res) => {
     if (newUser) {
       generateToken(newUser._id, res);
       await newUser.save();
-      const { password, ...plainUser } = newUser
+    // Convert Mongoose document to plain object
+      const userObject = newUser.toObject();
+    // Destructure to exclude password from userObject
+      const { password, ...plainUser } = userObject;
       return res.status(201).json(
         {
            message: 'User created successfully',

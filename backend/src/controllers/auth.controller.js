@@ -90,7 +90,7 @@ export const login = async(req, res) => {
   }
 }
 
-export const logout = () => {
+export const logout = (req,res) => {
   try {
     res.clearCookie('ping-token', {maxAge: 0});
     return res.status(200).json({ message: 'User logged out successfully' });  
@@ -127,7 +127,7 @@ export const updateProfile = async(req, res) => {
 
 export const checkAuth = (req,res) => {
   try {
-    res.status(200).json(req.user)
+    res.status(200).json(req.user);
   } catch (error) {
     console.log("error in checkauth controller ",error.message);
     res.status(500).json({message: 'server error'})

@@ -1,3 +1,4 @@
+import Message from "../models/message.model.js"
 import User from "../models/user.model.js"
 
 
@@ -17,7 +18,15 @@ export const getUsersForSidebar = async (req,res) => {
 
 export const getMessages =  async (req,res) => {
   try {
-    const {id: userToCatId} = req.params
+    const {id: userToChatId} = req.params
+    const myId = req.user._id
+
+    const messages = await Message.find({
+      $or:[
+        { senderId:myId, receiverId:userToChatId },
+        { senderId:userToChatId, receiverId:myId },
+        ]
+    })
   } catch (error) {
     console.log("error in getMessages");
     return res.status(500).json({ message: 'Server error' });

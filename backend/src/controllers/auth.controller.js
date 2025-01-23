@@ -50,7 +50,17 @@ export const signup = async(req, res) => {
 }
 
 export const login = (req, res) => {
-  res.send('login route');
+  const { email, password } = req.body;
+  if(!email || !password) {
+    return res.status(400).json({message: 'Please fill in all fields'});
+  }
+  try {
+    
+  } catch (error) {
+    console.log('Error in user login', error);
+    return res.status(500).json({ message: 'Server error' });
+    
+  }
 }
 
 export const logout = (req, res) => {

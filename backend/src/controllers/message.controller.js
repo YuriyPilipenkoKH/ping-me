@@ -10,6 +10,16 @@ export const getUsersForSidebar = async (req,res) => {
 
     return res.status(200).json(filteredUsers)
   } catch (error) {
-    
+    console.log("error in getUsersForSidebar");
+    return res.status(500).json({ message: 'Server error' });
+  }
+}
+
+export const getMessages =  async (req,res) => {
+  try {
+    const {id: userToCatId} = req.params
+  } catch (error) {
+    console.log("error in getMessages");
+    return res.status(500).json({ message: 'Server error' });
   }
 }

@@ -9,7 +9,6 @@ const generateToken = (userId, res) => {
   );
   // Set the cookie
   res.cookie(
-    "jwt",
     'ping-token',
      token, 
      { 

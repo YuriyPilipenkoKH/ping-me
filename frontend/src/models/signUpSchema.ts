@@ -29,3 +29,4 @@ export const signUpSchema = z.object({
 })
 
 export type signUpSchemaType =  z.infer<typeof signUpSchema>
+

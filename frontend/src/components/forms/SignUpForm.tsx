@@ -33,16 +33,18 @@ export const SignUpForm = () => {
     formData.append('email', data.email);
     formData.append('password', data.password);
     console.log(data);
+
+    reset()
   }
   const handleInputChange =   (field: keyof signUpSchemaType) => {
     if(logError) setLogError('')
     }
   return (
     <form  onSubmit={handleSubmit(onSubmit)}
-    className='flex flex-col gap-4 w-full p-5'
+    className='flex flex-col gap-3 w-full p-5'
     autoComplete="off"
     noValidate>
-      <label className={cn('formLabel input input-bordered flex items-center gap-2')}>
+      <label className={cn('formLabel input input-bordered flex items-center gap-1')}>
         <input 
           className={cn('grow' )}
           {...register('name', { onChange: handleInputChange })}
@@ -50,9 +52,9 @@ export const SignUpForm = () => {
               ? "Processing" 
               : 'name'}
           />
-          {errors.name && <div>{errors.name.message}</div>}
       </label>
-      <label className={cn('formLabel input input-bordered flex items-center gap-2')}>
+          {errors.name && <div className='text-purple-900'>{errors.name.message}</div>}
+      <label className={cn('formLabel input input-bordered flex items-center gap-1')}>
         <input 
           className={cn('grow' )}
           {...register('email', { onChange: handleInputChange })}
@@ -60,9 +62,9 @@ export const SignUpForm = () => {
               ? "Processing" 
               : 'email'}
           />
-          {errors.email && <div>{errors.email.message}</div>}
       </label>
-      <label className={cn('formLabel input input-bordered flex items-center gap-2')}>
+          {errors.email && <div className='text-purple-900'>{errors.email.message}</div>}
+      <label className={cn('formLabel input input-bordered flex items-center gap-1')}>
         <input 
           className={cn('grow' )}
           {...register('password', { onChange: handleInputChange })}
@@ -70,10 +72,10 @@ export const SignUpForm = () => {
               ? "Processing" 
               : 'password'}
           />
-          {errors.password && <div>{errors.password.message}</div>}
       </label>
+          {errors.password && <div className='text-purple-900'>{errors.password.message}</div>}
       <button
-        className='AuthFormSubmitBtn mt-auto btn btn-active btn-outline w-full'
+        className='AuthFormSubmitBtn mt-auto btn btn-active btn-primary w-full'
         type='submit'
         disabled={isSubmitting || !isDirty || !isValid || !!logError}
             >

@@ -1,6 +1,6 @@
 import {create} from 'zustand'
 import { User } from '../types/userTypes';
-import { axios } from '../lib/axios';
+import {  axios } from '../lib/axios';
 
 interface AuthStoreTypes {
   authUser: User | null // User is the interface from `userTypes.ts`
@@ -10,7 +10,7 @@ interface AuthStoreTypes {
   isSigningUp: boolean
   isLoggingdIn: boolean
   isUpdatingProfile: boolean
-  checkAuth: () =>Promise<void>
+  checkAuth: () => void
 }
 
 export const useAuthStore = create<AuthStoreTypes>((set) => ({
@@ -25,6 +25,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
       set({authUser: response.data})
     } catch (error) {
       set({authUser: null})
+      console.log('error in checkAuth', error)
     }
     finally{
       set({isCheckingAuth: false})

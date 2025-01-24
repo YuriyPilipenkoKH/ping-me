@@ -10,7 +10,7 @@ interface AuthStoreTypes {
   isSigningUp: boolean
   isLoggingdIn: boolean
   isUpdatingProfile: boolean
-  checkAuth: () =>void
+  checkAuth: () =>Promise<void>
 }
 
 export const useAuthStore = create<AuthStoreTypes>((set) => ({
@@ -21,9 +21,10 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
   isUpdatingProfile: true,
   checkAuth: async() =>{
     try {
-      const response = axios.get('/auth/check')
+      const response = await axios.get('/auth/check')
+      set({authUser: response.data})
     } catch (error) {
-      
+      set({authUser: null})
     }
   }
 }))

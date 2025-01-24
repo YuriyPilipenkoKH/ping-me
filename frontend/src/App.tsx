@@ -5,10 +5,12 @@ import SignUpPage from "./pages/SignUpPage"
 import LoginPage from "./pages/LoginPage"
 import SettingsPage from "./pages/SettingsPage"
 import ProfilePage from "./pages/ProfilePage"
+import { useAuthStore } from "./store/useAuthStore"
 // import { axios } from "./lib/axios"
 
 const App = () => {
-
+const {authUser} = useAuthStore()
+console.log(authUser);
   // const getMessages = async () => {
   //   const messages  = await axios.get('/users',).then(res => console.log(res.data))
 

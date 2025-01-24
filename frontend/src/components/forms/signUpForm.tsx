@@ -4,7 +4,8 @@ import {  useForm } from 'react-hook-form'
 import { signUpSchemaType ,signUpSchema} from '../../models/signUpSchema'
 import { cn } from '../../lib/cn'
 
-const signUpForm = () => {
+
+export const SignUpForm = () => {
   const [logError, setLogError] = useState<string>('')
   const {
     register, 
@@ -38,7 +39,7 @@ const signUpForm = () => {
     }
   return (
     <form  onSubmit={handleSubmit(onSubmit)}
-    className=''
+    className='flex flex-col gap-4 w-full p-5'
     autoComplete="off"
     noValidate>
       <label className={cn('formLabel input input-bordered flex items-center gap-2')}>
@@ -83,4 +84,3 @@ const signUpForm = () => {
   )
 }
 
-export default signUpForm

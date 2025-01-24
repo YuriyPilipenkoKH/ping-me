@@ -7,6 +7,10 @@
   ],
   "compilerOptions": {
     "noUnusedLocals": false, // Prevents highlighting unused local variables
-    "noUnusedParameters": false // Prevents highlighting unused function parameters
+    "noUnusedParameters": false, // Prevents highlighting unused function parameters
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"] // Map `@/` to the `src` folder
+    }
   }
 }

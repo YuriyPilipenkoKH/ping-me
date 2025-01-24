@@ -1,5 +1,6 @@
 import {create} from 'zustand'
 import { User } from '../types/userTypes';
+import { axios } from '../lib/axios';
 
 interface AuthStoreTypes {
   authUser: User | null // User is the interface from `userTypes.ts`
@@ -20,7 +21,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
   isUpdatingProfile: true,
   checkAuth: async() =>{
     try {
-      
+      const response = axios.get('/auth/check')
     } catch (error) {
       
     }

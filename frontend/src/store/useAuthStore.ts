@@ -26,5 +26,8 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
     } catch (error) {
       set({authUser: null})
     }
+    finally{
+      set({isCheckingAuth: false})
+    }
   }
 }))

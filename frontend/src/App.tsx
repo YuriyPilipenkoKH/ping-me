@@ -6,17 +6,17 @@ import LoginPage from "./pages/LoginPage"
 import SettingsPage from "./pages/SettingsPage"
 import ProfilePage from "./pages/ProfilePage"
 import { useAuthStore } from "./store/useAuthStore"
+import { useEffect } from "react"
 // import { axios } from "./lib/axios"
 
 const App = () => {
-const {authUser} = useAuthStore()
-console.log(authUser);
-  // const getMessages = async () => {
-  //   const messages  = await axios.get('/users',).then(res => console.log(res.data))
+const {authUser, checkAuth} = useAuthStore()
 
-    
-  // }
-  // getMessages()
+useEffect(() => {
+  checkAuth()
+  console.log(authUser)
+}, [])
+
 
   return (
     <div className=''>

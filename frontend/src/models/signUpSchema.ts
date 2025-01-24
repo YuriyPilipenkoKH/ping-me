@@ -1,6 +1,6 @@
 import z from 'zod'
 
-const userSchema = z.object({
+const signUpSchema = z.object({
   name: z
   .string()
   .trim()
@@ -11,6 +11,7 @@ const userSchema = z.object({
   }),
   email: z
   .string()
+  .trim()
   .email('invalid email')
   .refine((val) => !val.toLowerCase().startsWith('admin'), {
     message: 'admin is not allowed',
@@ -20,8 +21,11 @@ const userSchema = z.object({
   }),
   password: z
   .string()
+  .trim()
   .min(4)
   .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d$#&]*$/, {
     message: 'include numbers & capital letters',
   }),
 })
+
+export type signUpSchemaType =  z.infer<typeof signUpSchema>

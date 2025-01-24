@@ -3,14 +3,13 @@ import { User } from '../types/userTypes';
 import {  axios } from '../lib/axios';
 
 interface AuthStoreTypes {
-  authUser: User | null // User is the interface from `userTypes.ts`
+  authUser: User | null 
   isCheckingAuth: boolean
-  // setAuthUser: (user: User | null) => void; // Action to update `authUser`
-  // setIsCheckingAuth: (isChecking: boolean) => void; // Action to update `isCheckingAuth`
   isSigningUp: boolean
   isLoggingdIn: boolean
   isUpdatingProfile: boolean
   checkAuth: () => void
+  signUp: (data: FormData) => void
 }
 
 export const useAuthStore = create<AuthStoreTypes>((set) => ({
@@ -30,5 +29,9 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
     finally{
       set({isCheckingAuth: false})
     }
+  },
+  signUp : async (data) => {
+    
   }
+
 }))

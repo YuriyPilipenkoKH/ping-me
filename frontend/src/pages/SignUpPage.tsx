@@ -1,6 +1,8 @@
-import React from 'react'
+import { useState } from "react"
+
 
 const SignUpPage = () => {
+  const [show, setShow] = useState<boolean>(false)
   return (
     <div>SignUpPage</div>
   )

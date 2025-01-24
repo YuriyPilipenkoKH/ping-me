@@ -1,10 +1,15 @@
+import { Routes ,Route} from "react-router-dom"
 import Navbar from "./components/Navbar"
+import HomePage from "./pages/HomePage"
 
 const App = () => {
-  const fog = 5
+
   return (
-    <div className='l'>
+    <div className=''>
       <Navbar/>
+      <Routes>
+        <Route path="/" element ={<HomePage/>}/>
+      </Routes>
     </div>
   )
 }

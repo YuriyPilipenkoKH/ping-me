@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { SignUpForm } from "../components/forms/Register"
+import { SignUpForm } from "../components/forms/SignUpForm"
 
 
 

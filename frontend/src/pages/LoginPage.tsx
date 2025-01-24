@@ -1,6 +1,7 @@
 import Logo from '../components/nav/Logo'
 import { Link } from 'react-router-dom'
 import LoginForm from '../components/forms/LoginForm'
+import AuthImagePattern from '../components/AuthImagePattern'
   
 
 const LoginPage = () => {
@@ -20,6 +21,10 @@ const LoginPage = () => {
         </div>
       </div>
     </div>
+    <AuthImagePattern
+        title={"Welcome back!"}
+        subtitle={"Sign in to continue your conversations and catch up with your messages."}
+      />
   </div>
   )
 }

@@ -1,3 +1,4 @@
+import AuthImagePattern from "../components/AuthImagePattern"
 import { SignUpForm } from "../components/forms/SignUpForm"
 import Logo from "../components/nav/Logo"
 import { Link } from "react-router-dom"
@@ -20,6 +21,10 @@ const SignUpPage = () => {
           </div>
         </div>
       </div>
+      <AuthImagePattern
+        title="Join our community"
+        subtitle="Connect with friends, share moments, and stay in touch with your loved ones."
+      />
     </div>
   )
 }

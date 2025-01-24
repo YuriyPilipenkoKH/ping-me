@@ -1,6 +1,7 @@
 import {create} from 'zustand'
 import { User } from '../types/userTypes';
 import {  axios } from '../lib/axios';
+import toast from 'react-hot-toast';
 
 interface AuthStoreTypes {
   authUser: User | null 
@@ -37,12 +38,14 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
     if (!name || !email || !password) {
       throw new Error("All Fields are required");
     }
+    const data = {name, email, password}
 
     try {
       
-      const response = await axios.get('/auth/login', {
-        
-      })
+      const response = await axios.post('/auth/signup', data)
+      if (response.data) {
+        toast.success('Account created!')
+      }
     } catch (error) {
       
     }

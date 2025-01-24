@@ -1,12 +1,9 @@
-import { useState } from "react"
 import { SignUpForm } from "../components/forms/SignUpForm"
 import Logo from "../components/nav/Logo"
 import { Link } from "react-router-dom"
 
 
-
 const SignUpPage = () => {
-  const [show, setShow] = useState<boolean>(false)
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
       <div className="flex flex-col justify-center items-center p-6 sm:p-12">

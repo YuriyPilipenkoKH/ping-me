@@ -36,6 +36,9 @@ const LoginForm = () => {
           
         }
       }
+        const handleInputChange =   (field: keyof LoginSchemaType) => {
+          if(logError) setLogError('')
+          }
   return (
     <div>LoginForm</div>
   )

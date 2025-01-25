@@ -8,6 +8,9 @@ import { LoginSchemaType } from '../models/loginSchema';
 import { wait } from '../lib/wait';
 import capitalize from '../lib/capitalize';
 
+interface img {
+  image:string
+}
 interface AuthStoreTypes {
   authUser: User | null 
   isCheckingAuth: boolean
@@ -18,7 +21,7 @@ interface AuthStoreTypes {
   signUp: (data: signUpSchemaType) => Promise<boolean | undefined>
   logIn: (data: LoginSchemaType) => Promise<boolean | undefined>
   logOut: () => Promise<void>
-  updateProfile: (data: string) => Promise<void>
+  updateProfile: (data: img) => Promise<void>
 
 }
 

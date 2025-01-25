@@ -54,7 +54,7 @@ const LoginForm = () => {
               />
           </label>
           {errors.email && <div className='text-purple-900'>{errors.email.message}</div>}
-          <label className={cn('formLabel  flex items-center gap-1')}>
+          <label className={cn('formLabel  flex items-center gap-1 relative')}>
             <input 
               className={cn('grow input input-bordered' )}
               {...register('password', 

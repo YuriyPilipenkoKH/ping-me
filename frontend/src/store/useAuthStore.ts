@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
 import { signUpSchemaType } from '../models/signUpSchema';
 import { LoginSchemaType } from '../models/loginSchema';
+import { wait } from '../lib/wait';
 
 interface AuthStoreTypes {
   authUser: User | null 
@@ -59,13 +60,15 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
   
   },
   logIn : async (data) => {
+
     set({ isLoggingIn: true });
   
     try {
       const response = await axios.post('/auth/login', data)
       if (response.data) {
-        toast.success('Login successful!')
         set({authUser: response.data})
+        await wait(1000)
+        toast.success(`Hello ${response.data.name} !`)
 
       return true
     } 
@@ -83,8 +86,8 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
     try {
       const response = await axios.post('/auth/logout')
       if (response.status === 200) {
-        toast.success('Logout successful!')
         set({authUser: null})
+        toast.success(`Logout successful,  !`)
       }
     }  catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {

@@ -12,9 +12,10 @@ interface AuthStoreTypes {
   isSigningUp: boolean
   isLoggingIn: boolean
   isUpdatingProfile: boolean
-  checkAuth: () => void
+  checkAuth: () => Promise<void>
   signUp: (data: signUpSchemaType) => Promise<boolean | undefined>
   logIn: (data: LoginSchemaType) => Promise<boolean | undefined>
+  logOut: () => Promise<void>
 }
 
 export const useAuthStore = create<AuthStoreTypes>((set) => ({
@@ -42,6 +43,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
       if (response.data) {
         toast.success('Account created!')
         set({authUser: response.data})
+
         return true
       }
     } catch (error: unknown) {
@@ -64,6 +66,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
       if (response.data) {
         toast.success('Login successful!')
         set({authUser: response.data})
+
       return true
     } 
     } catch (error: unknown) {
@@ -75,6 +78,18 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
     finally{
       set({isLoggingIn: false})
     }
+  },
+  logOut: async () => {
+    try {
+      const response = await axios.post('/auth/logout')
+      if (response.status === 200) {
+        toast.success('Logout successful!')
+        set({authUser: null})
+      }
+    }  catch (error: unknown) {
+      if (error instanceof AxiosError && error.response) {
+        toast.error(error.response.data.message);
+      }
+    }
   }
-
 }))

@@ -43,9 +43,10 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
     try {
       const response = await axios.post('/auth/signup', data)
       if (response.data) {
-        toast.success('Account created!')
         set({authUser: response.data})
-
+        toast.success('Account created!')
+        await wait(1000) 
+        toast.success(`Welcome, ${capitalize(response.data.user.name)} !`)
         return true
       }
     } catch (error: unknown) {
@@ -69,7 +70,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
       if (response.data) {
         set({authUser: response.data})
         await wait(1000)
-        toast.success(`Hello ${capitalize(response.data.user.name)} !`)
+        toast.success(`Hello, ${capitalize(response.data.user.name)} !`)
 
       return true
     } 
@@ -88,7 +89,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
       const response = await axios.post('/auth/logout')
       if (response.status === 200) {
         set({authUser: null})
-        toast.success(`Logout successful,  !`)
+        toast.success(`Logout successful !`)
       }
     }  catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {

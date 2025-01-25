@@ -36,6 +36,7 @@ const Navbar = () => {
               </Link>
 
               <button 
+              type="button"
               className="flex gap-2 items-center" 
               onClick={logOut}
               >

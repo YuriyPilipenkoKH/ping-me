@@ -118,7 +118,11 @@ export const updateProfile = async(req, res) => {
       {profilePic: uploadResponse.secure_url},
       {new: true}
     )
-    return res.status(200).json({updateUser})
+    return res.status(201).json(
+      {
+         message: 'User updated successfully',
+         user: updateUser
+        })
     
   } catch (error) {
     console.log('error in updateprofile controller');

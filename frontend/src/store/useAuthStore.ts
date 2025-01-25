@@ -45,7 +45,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
     try {
       const response = await axios.post('/auth/signup', data)
       if (response.data) {
-        set({authUser: response.data})
+        set({authUser: response.data.user})
         toast.success('Account created!')
         await wait(1000) 
         toast.success(`Welcome, ${capitalize(response.data.user.name)} !`)
@@ -70,7 +70,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
     try {
       const response = await axios.post('/auth/login', data)
       if (response.data) {
-        set({authUser: response.data})
+        set({authUser: response.data.user})
         await wait(1000)
         toast.success(`Hello, ${capitalize(response.data.user.name)} !`)
 
@@ -102,9 +102,13 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
   updateProfile: async (data) => {
     set({ isUpdatingProfile: true });
     try {
-      
+      const response = await axios.put("/auth/update-profile", data);
+      set({ authUser: response.data.user });
     } catch (error) {
       
+
+    } finally {
+      set({ isUpdatingProfile: false });
     }
   }
 }))

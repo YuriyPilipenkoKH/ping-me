@@ -18,6 +18,8 @@ interface AuthStoreTypes {
   signUp: (data: signUpSchemaType) => Promise<boolean | undefined>
   logIn: (data: LoginSchemaType) => Promise<boolean | undefined>
   logOut: () => Promise<void>
+  updateProfile: (data: string) => Promise<void>
+
 }
 
 export const useAuthStore = create<AuthStoreTypes>((set) => ({
@@ -95,6 +97,14 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
       if (error instanceof AxiosError && error.response) {
         toast.error(error.response.data.message);
       }
+    }
+  },
+  updateProfile: async (data) => {
+    set({ isUpdatingProfile: true });
+    try {
+      
+    } catch (error) {
+      
     }
   }
 }))

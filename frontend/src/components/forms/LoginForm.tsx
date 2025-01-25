@@ -60,7 +60,7 @@ const LoginForm = () => {
               {...register('password', 
               { onChange: handleInputChange })}
               placeholder=	{( isSubmitting )? "Processing" : "•••••"}
-              onClick={() => setShow(!show)}
+              type = {show ? 'text' : 'password' }
               />
                <button
           type="button"

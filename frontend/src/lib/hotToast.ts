@@ -1,7 +1,7 @@
 
 export const options={
     success: {
-      duration: 3000,
+      duration: 4000,
       style: {
         background: 'green',
         border: '2px solid orange',
@@ -9,7 +9,7 @@ export const options={
       },
     },
     error: {
-      duration: 3000,  
+      duration: 4000,  
       style: {
         background: 'crimson',
         border: '2px solid black',

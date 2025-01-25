@@ -35,13 +35,12 @@ export const SignUpForm = () => {
     formData.append('email', data.email);
     formData.append('password', data.password);
     console.log(data);
-    try {
-      const response = signUp(formData)
-      
-      reset()
-    } catch (error) {
-      
-    }
+
+      const response = await signUp(formData)
+      if(response) {
+        reset()
+      }
+
   }
   const handleInputChange =   (field: keyof signUpSchemaType) => {
     if(logError) setLogError('')

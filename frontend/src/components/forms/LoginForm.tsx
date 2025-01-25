@@ -3,8 +3,10 @@ import  { useState } from 'react'
 import { loginSchema, LoginSchemaType } from '../../models/loginSchema'
 import { useForm } from 'react-hook-form'
 import { cn } from '../../lib/cn'
+import { useAuthStore } from '../../store/useAuthStore'
 
 const LoginForm = () => {
+  const {logIn} = useAuthStore()
   const [logError, setLogError] = useState<string>('')
    const {
       register, 
@@ -25,21 +27,15 @@ const LoginForm = () => {
       isSubmitting,
       isLoading 
     } = formState
-      const onSubmit = async (data: LoginSchemaType) => {
-        const formData = new FormData();
-        formData.append('email', data.email);
-        formData.append('password', data.password);
-        console.log(data);
-        try {
-          
-          reset()
-        } catch (error) {
-          
-        }
+
+    const onSubmit = async (data: LoginSchemaType) => {
+      const response = await logIn(data)
+      if(response) reset()
       }
-        const handleInputChange =   (field: keyof LoginSchemaType) => {
-          if(logError) setLogError('')
-          }
+    const handleInputChange =   (field: keyof LoginSchemaType) => {
+      if(logError) setLogError('')
+      }
+
   return (
      <form  onSubmit={handleSubmit(onSubmit)}
         className='flex flex-col gap-3 w-full p-5'

@@ -29,16 +29,15 @@ export const SignUpForm = () => {
     isSubmitting,
     isLoading 
   } = formState
-  
+
   const onSubmit = async (data: signUpSchemaType) => {
-      const response = await signUp(data)
-      if(response) {
-        reset()
-      }
+    const response = await signUp(data)
+    if(response)reset()
   }
   const handleInputChange =   (field: keyof signUpSchemaType) => {
     if(logError) setLogError('')
-    }
+  }
+
   return (
     <form  onSubmit={handleSubmit(onSubmit)}
     className='flex flex-col gap-3 w-full p-5'

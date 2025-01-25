@@ -4,10 +4,13 @@ import { loginSchema, LoginSchemaType } from '../../models/loginSchema'
 import { useForm } from 'react-hook-form'
 import { cn } from '../../lib/cn'
 import { useAuthStore } from '../../store/useAuthStore'
+import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare, User } from "lucide-react";
+
 
 const LoginForm = () => {
   const {logIn} = useAuthStore()
   const [logError, setLogError] = useState<string>('')
+  const [show, setShow] = useState<boolean>(false)
    const {
       register, 
       handleSubmit,
@@ -56,8 +59,20 @@ const LoginForm = () => {
               className={cn('grow input input-bordered' )}
               {...register('password', 
               { onChange: handleInputChange })}
-              placeholder=	{( isSubmitting )? "Processing" : 'pass'}
+              placeholder=	{( isSubmitting )? "Processing" : "•••••"}
+              onClick={() => setShow(!show)}
               />
+               <button
+          type="button"
+          className="absolute inset-y-0 right-0 pr-3 flex items-center"
+          onClick={() => setShow(!show)}
+        >
+          {show ? (
+            <EyeOff className="size-5 text-base-content/40" />
+          ) : (
+            <Eye className="size-5 text-base-content/40" />
+          )}
+        </button>
           </label>
           {errors.password && <div className='text-purple-900'>{errors.password.message}</div>}
           <button

@@ -6,6 +6,7 @@ import { AxiosError } from 'axios';
 import { signUpSchemaType } from '../models/signUpSchema';
 import { LoginSchemaType } from '../models/loginSchema';
 import { wait } from '../lib/wait';
+import capitalize from '../lib/capitalize';
 
 interface AuthStoreTypes {
   authUser: User | null 
@@ -68,7 +69,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
       if (response.data) {
         set({authUser: response.data})
         await wait(1000)
-        toast.success(`Hello ${response.data.name} !`)
+        toast.success(`Hello ${capitalize(response.data.user.name)} !`)
 
       return true
     } 

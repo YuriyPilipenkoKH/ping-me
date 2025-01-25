@@ -10,8 +10,8 @@ export const updateProfile = async(req, res) => {
     const existingUserImage = req.user.image;
 
     // console.log('image:', image);
-    // console.log('userId:', userId);
-    // console.log('existingUserImage:', existingUserImage);
+    console.log('userId:', userId);
+    console.log('existingUserImage:', existingUserImage);
 
     // Check if image is provided
     if (!image) {
@@ -23,11 +23,11 @@ export const updateProfile = async(req, res) => {
     // If there is an existing image, delete it from Cloudinary
     if (existingUserImage) {
       const publicId = existingUserImage.split('/').pop().split('.')[0]; // Extract public_id from image URL
-      // console.log('Deleting old image with public_id:', publicId);
+      console.log('Deleting old image with public_id:', publicId);
 
       try {
         const deleteResponse = await cloudinary.uploader.destroy(`ping-me/users/${userId}/${publicId}`);
-        // console.log('Old image deleted:', deleteResponse);
+        console.log('Old image deleted:', deleteResponse);
       } catch (deleteError) {
         console.error('Error deleting old image from Cloudinary:', deleteError);
         return res.status(500).json({
@@ -36,12 +36,29 @@ export const updateProfile = async(req, res) => {
         });
       }
     }
+    // allow overwriting the asset with new versions
+  //   const options = {
+  //     use_filename: true,
+  //     unique_filename: false,
+  //     overwrite: true,
+  //     folder:  `ping-me/users/${userId.toString()}`,
+  //     resource_type: "image",
+  //     public_id: userId,
+  // };
+  const options = {
+    public_id: userId, 
+    folder:  `ping-me/users/${userId}`,
+    use_filename: true,
+    unique_filename: false,
+    overwrite: true,
+    resource_type: "image",
+  };
+  
+  // console.log('Uploading image to Cloudinary with options:', options);
 
     // Upload the new image to Cloudinary
-    // console.log('Uploading new image to Cloudinary');
-    const uploadResponse = await cloudinary.uploader.upload(image, {
-      folder: `ping-me/users/${userId}`, // Specify folder path for user
-    });
+    console.log('Uploading new image to Cloudinary');
+    const uploadResponse = await cloudinary.uploader.upload(image, options);
 
     console.log('Image uploaded to Cloudinary:', uploadResponse);
 

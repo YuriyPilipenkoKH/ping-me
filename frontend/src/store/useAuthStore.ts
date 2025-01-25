@@ -3,6 +3,7 @@ import { User } from '../types/userTypes';
 import {  axios } from '../lib/axios';
 import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
+import { signUpSchemaType } from '../models/signUpSchema';
 
 interface AuthStoreTypes {
   authUser: User | null 
@@ -11,7 +12,7 @@ interface AuthStoreTypes {
   isLoggingdIn: boolean
   isUpdatingProfile: boolean
   checkAuth: () => void
-  signUp: (formData: FormData) => Promise<boolean | undefined>
+  signUp: (data: signUpSchemaType) => Promise<boolean | undefined>
 }
 
 export const useAuthStore = create<AuthStoreTypes>((set) => ({
@@ -32,15 +33,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
       set({isCheckingAuth: false})
     }
   },
-  signUp : async (formData) => {
-    const name = formData.get('name') as string 
-    const email = formData.get('email') as string 
-    const password = formData.get('password') as string 
-    if (!name || !email || !password) {
-      throw new Error("All Fields are required");
-    }
-    const data = {name, email, password}
-
+  signUp : async (data) => {
     try {
       const response = await axios.post('/auth/signup', data)
       if (response.data) {

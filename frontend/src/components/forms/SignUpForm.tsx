@@ -29,18 +29,12 @@ export const SignUpForm = () => {
     isSubmitting,
     isLoading 
   } = formState
+  
   const onSubmit = async (data: signUpSchemaType) => {
-    const formData = new FormData();
-    formData.append('name', data.name);
-    formData.append('email', data.email);
-    formData.append('password', data.password);
-    console.log(data);
-
-      const response = await signUp(formData)
+      const response = await signUp(data)
       if(response) {
         reset()
       }
-
   }
   const handleInputChange =   (field: keyof signUpSchemaType) => {
     if(logError) setLogError('')

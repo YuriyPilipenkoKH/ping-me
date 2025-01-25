@@ -21,8 +21,8 @@ app.use(cors({
   credentials:true
 }))
 // Set a larger limit for request body
-app.use(bodyParser.json({ limit: '10mb' })); // Adjust the size as needed
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: true })); // For form data
+app.use(bodyParser.json({ limit: '50mb' })); // Adjust the size as needed
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // For form data
 
 
 app.use('/api/auth', authRoutes);

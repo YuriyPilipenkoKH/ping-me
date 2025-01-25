@@ -31,6 +31,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
   checkAuth: async() =>{
     try {
       const response = await axios.get('/auth/check')
+      // console.log('response',response.data);
       set({authUser: response.data})
     } catch (error) {
       set({authUser: null})
@@ -103,10 +104,14 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
     set({ isUpdatingProfile: true });
     try {
       const response = await axios.put("/auth/update-profile", data);
+      if(response.data){
       set({ authUser: response.data.user });
-    } catch (error) {
-      
-
+      toast.success(response.data.message);
+    }
+    } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response) {
+        toast.error(error.response.data.message);
+      }
     } finally {
       set({ isUpdatingProfile: false });
     }

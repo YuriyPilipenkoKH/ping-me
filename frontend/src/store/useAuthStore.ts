@@ -1,6 +1,6 @@
 import {create} from 'zustand'
 import { User } from '../types/userTypes';
-import {  axios } from '../lib/axios';
+import { axios } from '../lib/axios';
 import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
 import { signUpSchemaType } from '../models/signUpSchema';
@@ -10,7 +10,7 @@ interface AuthStoreTypes {
   authUser: User | null 
   isCheckingAuth: boolean
   isSigningUp: boolean
-  isLoggingdIn: boolean
+  isLoggingIn: boolean
   isUpdatingProfile: boolean
   checkAuth: () => void
   signUp: (data: signUpSchemaType) => Promise<boolean | undefined>
@@ -20,9 +20,9 @@ interface AuthStoreTypes {
 export const useAuthStore = create<AuthStoreTypes>((set) => ({
   authUser: null,
   isCheckingAuth: true,
-  isSigningUp: true,
-  isLoggingdIn: true,
-  isUpdatingProfile: true,
+  isSigningUp: false,
+  isLoggingIn: false,
+  isUpdatingProfile: false,
   checkAuth: async() =>{
     try {
       const response = await axios.get('/auth/check')
@@ -36,6 +36,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
     }
   },
   signUp : async (data) => {
+    set({ isSigningUp: true });
     try {
       const response = await axios.post('/auth/signup', data)
       if (response.data) {
@@ -56,6 +57,8 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
   
   },
   logIn : async (data) => {
+    set({ isLoggingIn: true });
+  
     try {
       const response = await axios.post('/auth/login', data)
       if (response.data) {
@@ -70,7 +73,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
       return false
     }
     finally{
-      set({isLoggingdIn: false})
+      set({isLoggingIn: false})
     }
   }
 

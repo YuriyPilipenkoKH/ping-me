@@ -103,52 +103,75 @@ export const logout = (req,res) => {
 }
 
 export const updateProfile = async(req, res) => {
+  console.log('updateProfile');
+  
   try {
     const {image} =  req.body
     const userId = req.user._id
-    const existingUserImage = req.user.image
-
-    if(!image) {
-     return res.status(400).json({
-      message: " Profile pic is not provided"
-      })
-    }    
+    if (!userId) {
+      return res.status(400).json({ message: "User ID not found" });
+    }
+     if (!image) {
+      return res.status(400).json({ message: "Profile pic is not provided" });
+    }
+    console.log( 'userId',userId);
 
     // Upload the image to Cloudinary with the specified folder
- // If an old image exists, delete it from Cloudinary
-    if (existingUserImage) {
-      const publicId = existingUserImage.split('/').pop().split('.')[0]; // Extract public_id from the image URL
-      await cloudinary.uploader.destroy(`ping-me/users/${userId}/${publicId}`);
-    }
+    const uploadResponse = await cloudinary.uploader.upload(image);
+        // Debug: Log upload duration
+        console.log(
+          `Upload completed in ${Date.now() - startTime}ms`,
+          uploadResponse.secure_url
+        );
+  
+ const updateUser = await User.findByIdAndUpdate(
+     userId, 
+     {image: uploadResponse.secure_url},
+     {new: true}
+   )
+   return res.status(200).json(
+     {
+        message: 'User updated successfully',
+        user: updateUser
+       })
 
-    // Upload the new image to Cloudinary
-    const uploadResponse = await cloudinary.uploader.upload(image, {
-      folder: `ping-me/users/${userId}`, // Folder path in Cloudinary
-    });
-
-
-    const updateUser = await User.findByIdAndUpdate(
-      userId, 
-      {image: uploadResponse.secure_url},
-      {new: true}
-    )
-    return res.status(201).json(
-      {
-         message: 'User updated successfully',
-         user: updateUser
-        })
-    
   } catch (error) {
     console.log('error in updateprofile controller');
+
   }
 }
 
 export const checkAuth = (req,res) => {
   try {
     console.log('Userid',req.user._id);
-   return res.status(200).json(req.user);
+    return res.status(200).json(req.user);
   } catch (error) {
     console.log("error in checkauth controller ",error.message);
     res.status(500).json({message: 'server error'})
   }
 }
+
+
+// If an old image exists, delete it from Cloudinary
+   // if (existingUserImage) {
+   //   const publicId = existingUserImage.split('/').pop().split('.')[0]; // Extract public_id from the image URL
+   //   await cloudinary.uploader.destroy(`ping-me/users/${userId}/${publicId}`);
+   // }
+
+   // Upload the new image to Cloudinary
+   // const uploadResponse = await cloudinary.uploader.upload(image, {
+   //   folder: `ping-me/users/${userId}`, // Folder path in Cloudinary
+   // });
+
+
+   // const updateUser = await User.findByIdAndUpdate(
+   //   userId, 
+   //   {image: uploadResponse.secure_url},
+   //   {new: true}
+   // )
+   // return res.status(201).json(
+   //   {
+   //      message: 'User updated successfully',
+   //      user: updateUser
+   //     })
+   

@@ -37,22 +37,15 @@ export const updateProfile = async(req, res) => {
       }
     }
     // allow overwriting the asset with new versions
-  //   const options = {
-  //     use_filename: true,
-  //     unique_filename: false,
-  //     overwrite: true,
-  //     folder:  `ping-me/users/${userId.toString()}`,
-  //     resource_type: "image",
-  //     public_id: userId,
-  // };
-  const options = {
-    public_id: userId, 
-    folder:  `ping-me/users/${userId}`,
-    use_filename: true,
-    unique_filename: false,
-    overwrite: true,
-    resource_type: "image",
+    const options = {
+      use_filename: true,
+      unique_filename: false,
+      overwrite: true,
+      folder:  `ping-me/users/${userId.toString()}`,
+      resource_type: "image",
+      public_id: userId,
   };
+
   
   // console.log('Uploading image to Cloudinary with options:', options);
 

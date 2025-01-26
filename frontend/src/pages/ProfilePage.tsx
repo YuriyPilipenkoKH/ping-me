@@ -1,10 +1,7 @@
-import React, { useState } from 'react'
-import {  Mail, User } from "lucide-react";
-import { useAuthStore } from '../store/useAuthStore';
 import AvatarUploadForm from '../components/forms/AvatarUploadForm.orig';
+import ProfileForm from '../components/forms/ProfileForm.orig';
 
 const ProfilePage = () => {
-  const { authUser, } = useAuthStore();
 
 
   return (
@@ -15,28 +12,10 @@ const ProfilePage = () => {
             <h1 className="text-2xl font-semibold ">Profile</h1>
             <p className="mt-2">Your profile information</p>
           </div>
-
           {/* avatar upload section */}
           <AvatarUploadForm />
-
-          <div className="space-y-6">
-            <div className="space-y-1.5">
-              <div className="text-sm text-zinc-400 flex items-center gap-2">
-                <User className="w-4 h-4" />
-                Full Name
-              </div>
-              <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{authUser?.name}</p>
-            </div>
-
-            <div className="space-y-1.5">
-              <div className="text-sm text-zinc-400 flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                Email Address
-              </div>
-              <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{authUser?.email}</p>
-            </div>
-          </div>
-
+          <ProfileForm  />
+          {/* Account Information section */}
           <div className="mt-6 bg-base-300 rounded-xl p-6">
             <h2 className="text-lg font-medium  mb-4">Account Information</h2>
             <div className="space-y-3 text-sm">

@@ -11,7 +11,8 @@ interface useChatStoreTypes {
   isUsersLoading: boolean,
   isMessagesLoading: boolean,
   getUsers: () => Promise<void>
-  getMessages: (userId:string) => Promise<void>
+  getMessages: (data: string) => Promise<void>
+  setSelectedUser: (data: User) => void
 }
 
 export const useChatStore = create<useChatStoreTypes>((set, get) => ({
@@ -46,5 +47,6 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
    } finally {
       set({ isMessagesLoading: false });
     }
-  }
+  },
+  setSelectedUser: (selectedUser) => set({ selectedUser }),
 }))

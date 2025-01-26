@@ -4,7 +4,7 @@ import { Camera, } from "lucide-react";
 import toast from 'react-hot-toast';
 
 const AvatarUploadForm = () => {
-  const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
+  const { authUser, isUpdatingProfile } = useAuthStore();
     const [selectedImg, setSelectedImg] =  useState<string | null>(null);
     console.log('selectedImg: ', selectedImg);
 

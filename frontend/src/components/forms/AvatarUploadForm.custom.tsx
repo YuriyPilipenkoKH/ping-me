@@ -41,20 +41,20 @@ const AvatarUploadFormCustom = () => {
             isUpdatingProfile ? "animate-pulse pointer-events-none" : ""
           )}       
           >
-              <Camera className="w-5 h-5 text-base-200" />
-              <input
-                type="file"
-                id="avatar-upload"
-                className="hidden"
-                accept=".png, .jpg, .jpeg, .webp"
-                onChange={handleImageUpload}
-                disabled={isUpdatingProfile}
-              />
-            </label>
+        <Camera className="w-5 h-5 text-base-200" />
+          <input
+            type="file"
+            id="avatar-upload"
+            className="hidden"
+            accept=".png, .jpg, .jpeg, .webp"
+            onChange={handleImageUpload}
+            disabled={isUpdatingProfile}
+          />
+        </label>
       </form>
       <p className="text-sm text-zinc-400">
-      {isUpdatingProfile ? "Uploading..." : "Click the camera icon to update your photo"}
-    </p>
+        {isUpdatingProfile ? "Uploading..." : "Click the camera icon to update your photo"}
+      </p>
     </div>
   )
 }

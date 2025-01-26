@@ -9,7 +9,7 @@ import { wait } from '../lib/wait';
 import capitalize from '../lib/capitalize';
 
 interface img {
-  image:string
+  image: File
 }
 interface AuthStoreTypes {
   authUser: User | null 
@@ -22,6 +22,7 @@ interface AuthStoreTypes {
   logIn: (data: LoginSchemaType) => Promise<boolean | undefined>
   logOut: () => Promise<void>
   updateProfile: (data: img) => Promise<void>
+
 
 }
 
@@ -106,7 +107,9 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
   updateProfile: async (data) => {
     set({ isUpdatingProfile: true });
     try {
-      const response = await axios.put("/auth/upload", data);
+      const formData = new FormData();
+      formData.append('file', data.image);
+      const response = await axios.put("/auth/upload", formData);
       if(response.data){
       set({ authUser: response.data.user });
       toast.success(response.data.message);

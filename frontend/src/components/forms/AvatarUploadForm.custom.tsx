@@ -7,7 +7,7 @@ import { cn } from "../../lib/cn";
 
 const AvatarUploadFormCustom = () => {
     const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
-    const [selectedImg, setSelectedImg] =  useState<string | null>(null);
+    const [selectedImg, setSelectedImg] =  useState<string >('');
     const [file, setFile] = useState<File | null>(null); 
     console.log(authUser);
     console.log('selectedImg.cus',selectedImg);
@@ -22,7 +22,7 @@ const AvatarUploadFormCustom = () => {
       setFile(file)
       setSelectedImg(URL.createObjectURL(file));
 
-      // await updateProfile({ image: selectedImg });
+      await updateProfile({ image: file });
     }
 
   return (

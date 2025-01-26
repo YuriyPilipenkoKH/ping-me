@@ -105,16 +105,17 @@ export const logout = (req,res) => {
 export const updateProfile = async(req, res) => {
   console.log('updateProfile');
   
+  const {image} =  req.body
+  const userId = req.user._id
+  if (!userId) {
+    return res.status(400).json({ message: "User ID not found" });
+  }
+   if (!image) {
+    return res.status(400).json({ message: "Profile pic is not provided" });
+  }
+  console.log( 'userId',userId);
+  
   try {
-    const {image} =  req.body
-    const userId = req.user._id
-    if (!userId) {
-      return res.status(400).json({ message: "User ID not found" });
-    }
-     if (!image) {
-      return res.status(400).json({ message: "Profile pic is not provided" });
-    }
-    console.log( 'userId',userId);
 
     // Upload the image to Cloudinary with the specified folder
     const uploadResponse = await cloudinary.uploader.upload(image);

@@ -9,8 +9,7 @@ const AvatarUploadFormCustom = () => {
     const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
     const [selectedImg, setSelectedImg] =  useState<string >('');
     const [file, setFile] = useState<File | null>(null); 
-    console.log(authUser);
-    console.log('selectedImg.cus',selectedImg);
+
 
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0]; // Use optional chaining to handle null or undefined

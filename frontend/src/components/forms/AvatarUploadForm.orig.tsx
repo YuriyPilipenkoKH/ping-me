@@ -6,6 +6,8 @@ import toast from 'react-hot-toast';
 const AvatarUploadForm = () => {
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
     const [selectedImg, setSelectedImg] =  useState<string | null>(null);
+    console.log('selectedImg: ', selectedImg);
+
 
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0]; // Use optional chaining to handle null or undefined
@@ -22,7 +24,9 @@ const AvatarUploadForm = () => {
       reader.onload = async () => {
         const base64Image = reader.result as string; // Type assertion because result can be string or ArrayBuffer
         setSelectedImg(base64Image);
-        await updateProfile({ image: base64Image });
+
+
+        // await updateProfile({ image: base64Image });
       };
     };
   return (

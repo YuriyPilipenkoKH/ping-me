@@ -8,3 +8,4 @@ export interface Message {
   createdAt?:Date
   updatedAt?:Date
 }
+export interface MessageInput extends Pick<Message, "text" | "image"> {}

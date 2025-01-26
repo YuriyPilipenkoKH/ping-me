@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React ,{ useRef, useState } from "react";
 
 import { Image, Send, X } from "lucide-react";
 import toast from "react-hot-toast";
@@ -6,13 +6,13 @@ import { useChatStore } from "../../store/useChatStore";
 
 const MessageInput = () => {
   const [text, setText] = useState("");
-  const [imagePreview, setImagePreview] = useState(null);
-  const fileInputRef = useRef(null);
+  const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { sendMessage } = useChatStore();
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (!file.type.startsWith("image/")) {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file?.type.startsWith("image/")) {
       toast.error("Please select an image file");
       return;
     }
@@ -29,14 +29,17 @@ const MessageInput = () => {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const handleSendMessage = async (e) => {
+  const handleSendMessage = async (e:React.FormEvent) => {
     e.preventDefault();
     if (!text.trim() && !imagePreview) return;
 
     try {
+      // Convert imagePreview to a string or undefined
+    const imageToSend = typeof imagePreview === "string" ? imagePreview : undefined;
+
       await sendMessage({
         text: text.trim(),
-        image: imagePreview,
+        image: imageToSend,
       });
 
       // Clear form

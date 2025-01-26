@@ -1,8 +1,9 @@
 import { create } from "zustand";
 import toast from "react-hot-toast";
 import { User } from "../types/userTypes";
-import { Message } from "../types/messageTypes";
+import { Message, MessageInput } from "../types/messageTypes";
 import axios, { AxiosError } from "axios";
+
 
 interface useChatStoreTypes {
   messages: Message[],
@@ -12,9 +13,10 @@ interface useChatStoreTypes {
   isMessagesLoading: boolean,
   getUsers: () => Promise<void>
   getMessages: (data: string) => Promise<void>
-  setSelectedUser: (data: User) => void
+  setSelectedUser: (data: User | null) => void
   subscribeToMessages: () => void
   unsubscribeFromMessages: () => void
+  sendMessage:  (data: MessageInput) => Promise<void>
 }
 
 export const useChatStore = create<useChatStoreTypes>((set, get) => ({
@@ -53,4 +55,5 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
   setSelectedUser: (selectedUser) => set({ selectedUser }),
   subscribeToMessages: () => {},
   unsubscribeFromMessages: () => {},
+  sendMessage: async (messageData) => {},
 }))

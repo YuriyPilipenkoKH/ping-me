@@ -1,10 +1,11 @@
 import Busboy from 'busboy';
 import cloudinary from '../lib/cloudinary.js';
+import User from '../models/user.model.js';
 
 export const uploadImage = async (req, res) => {
   console.log('uploadImage');
 
-  const userId = req.user._id;
+  const userId = req.user._id
   if (!userId) {
     return res.status(400).json({ message: 'User ID not found' });
   }
@@ -48,9 +49,15 @@ export const uploadImage = async (req, res) => {
 
         console.log('Upload complete:', uploadResponse.secure_url);
 
+        const updatedUser = await User.findByIdAndUpdate(
+          userId,
+          { profilePic: uploadResponse.secure_url },
+          { new: true }
+        );
+
         res.status(200).json({
           message: 'Profile image uploaded successfully',
-          imageUrl: uploadResponse.secure_url,
+          user : updatedUser,
         });
       } catch (error) {
         console.error('Error during file upload:', error);

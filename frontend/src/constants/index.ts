@@ -31,4 +31,11 @@ export const THEMES = [
   "dim",
   "nord",
   "sunset",
-];
+] as const;
+
+export type Theme = typeof THEMES[number];  // This creates a union of all string literals from the THEMES array
+
+
+
+
+

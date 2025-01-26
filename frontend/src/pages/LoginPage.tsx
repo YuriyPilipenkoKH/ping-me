@@ -1,7 +1,7 @@
 import Logo from '../components/nav/Logo'
 import { Link } from 'react-router-dom'
 import LoginForm from '../components/forms/LoginForm'
-import AuthImagePattern from '../components/AuthImagePattern'
+import AuthImagePattern from '../components/auth/AuthImagePattern'
   
 
 const LoginPage = () => {

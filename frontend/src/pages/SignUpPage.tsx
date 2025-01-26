@@ -1,4 +1,4 @@
-import AuthImagePattern from "../components/AuthImagePattern"
+import AuthImagePattern from "../components/auth/AuthImagePattern"
 import { SignUpForm } from "../components/forms/SignUpForm"
 import Logo from "../components/nav/Logo"
 import { Link } from "react-router-dom"

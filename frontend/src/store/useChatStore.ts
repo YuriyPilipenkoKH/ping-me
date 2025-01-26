@@ -13,6 +13,8 @@ interface useChatStoreTypes {
   getUsers: () => Promise<void>
   getMessages: (data: string) => Promise<void>
   setSelectedUser: (data: User) => void
+  subscribeToMessages: () => void
+  unsubscribeFromMessages: () => void
 }
 
 export const useChatStore = create<useChatStoreTypes>((set, get) => ({
@@ -49,4 +51,6 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
     }
   },
   setSelectedUser: (selectedUser) => set({ selectedUser }),
+  subscribeToMessages: () => {},
+  unsubscribeFromMessages: () => {},
 }))

@@ -17,6 +17,7 @@ interface AuthStoreTypes {
   isSigningUp: boolean
   isLoggingIn: boolean
   isUpdatingProfile: boolean
+  onlineUsers: string[],
   checkAuth: () => Promise<void>
   signUp: (data: signUpSchemaType) => Promise<boolean | undefined>
   logIn: (data: LoginSchemaType) => Promise<boolean | undefined>
@@ -30,6 +31,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
   isSigningUp: false,
   isLoggingIn: false,
   isUpdatingProfile: false,
+  onlineUsers: [],
   checkAuth: async() =>{
     try {
       const response = await axios.get('/auth/check')

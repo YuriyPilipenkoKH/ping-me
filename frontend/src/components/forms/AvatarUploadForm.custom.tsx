@@ -37,7 +37,7 @@ const AvatarUploadFormCustom = () => {
       className="relative">
         <label
           htmlFor="avatar-upload"
-          className={cn('absolute bottom-0 right-0 bg-base-content hover:scale-105  p-2 rounded-full cursor-pointer transition-all duration-200',
+          className={cn('absolute bottom-0 right-0 transform translate-x-[50%]  bg-base-content hover:scale-105  p-2 rounded-full cursor-pointer transition-all duration-200',
             isUpdatingProfile ? "animate-pulse pointer-events-none" : ""
           )}       
           >

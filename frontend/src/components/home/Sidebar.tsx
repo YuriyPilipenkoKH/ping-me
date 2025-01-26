@@ -12,6 +12,7 @@ const Sidebar = () => {
     setSelectedUser, 
     isUsersLoading
     } = useChatStore()
+    console.log('users',users);
  
     const { onlineUsers } = useAuthStore();
     const [showOnlineOnly, setShowOnlineOnly] = useState<boolean>(false);
@@ -20,9 +21,9 @@ const Sidebar = () => {
       getUsers();
     }, [getUsers]);
   
-    const filteredUsers = showOnlineOnly
-      ? users.filter((user) => onlineUsers.includes(user._id))
-      : users;
+    // const filteredUsers = showOnlineOnly
+    //   ? users.filter((user) => onlineUsers.includes(user._id))
+    //   : users;
   
     if (isUsersLoading) return <SidebarSkeleton />;
     return (
@@ -48,11 +49,7 @@ const Sidebar = () => {
         </div>
   
         <div className="overflow-y-auto w-full py-3">
-
-          
-
-
-          {filteredUsers.map((user) => (
+          {/* {users.map((user) => (
             <button
               key={user._id}
               onClick={() => setSelectedUser(user)}
@@ -76,20 +73,17 @@ const Sidebar = () => {
                 )}
               </div>
   
-     
-               <div className="hidden lg:block text-left min-w-0">
+            
+              <div className="hidden lg:block text-left min-w-0">
                 <div className="font-medium truncate">{user.name}</div>
                 <div className="text-sm text-zinc-400">
                   {onlineUsers.includes(user._id) ? "Online" : "Offline"}
                 </div>
               </div>
             </button>
-          ))
-          } 
-
-          
-   
-          {/* {filteredUsers.length === 0 && (
+          ))} */}
+  
+          {/* {users.length === 0 && (
             <div className="text-center text-zinc-500 py-4">No online users</div>
           )} */}
         </div>

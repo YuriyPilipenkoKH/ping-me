@@ -3,6 +3,7 @@ import React from 'react'
 const SidebarTemp = () => {
   return (
     <>
+      <div className="overflow-y-auto w-full py-3"></div>
          {filteredUsers.map((user) => (
             <button
               key={user._id}
@@ -31,13 +32,13 @@ const SidebarTemp = () => {
                <div className="hidden lg:block text-left min-w-0">
                 <div className="font-medium truncate">{user.name}</div>
                 <div className="text-sm text-zinc-400">
-                  {onlineUsers.includes(user._id) ? "Online" : "Offline"}
+                  {/* {onlineUsers.includes(user._id) ? "Online" : "Offline"} */}
                 </div>
               </div>
             </button>
           ))
           } 
-          
+
           {/* {filteredUsers.length === 0 && (
             <div className="text-center text-zinc-500 py-4">No online users</div>
           )} */}

@@ -2,7 +2,8 @@ import { create } from "zustand";
 import toast from "react-hot-toast";
 import { User } from "../types/userTypes";
 import { Message, MessageInput } from "../types/messageTypes";
-import axios, { AxiosError } from "axios";
+import  { AxiosError } from "axios";
+import { axios } from "../lib/axios";
 
 
 interface useChatStoreTypes {
@@ -28,7 +29,9 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
   getUsers: async () => {
     set({ isUsersLoading: true })
     try {
-      const res = await axios.get('/messages/users')
+      const res = await axios.get('/messages/users',{
+        headers: { "Content-Type": "application/json" }
+      })
       set({ users: res.data });
 
     } catch (error: unknown) {

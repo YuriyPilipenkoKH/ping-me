@@ -57,7 +57,9 @@ const MessageInput = () => {
         <div className="mb-3 flex items-center gap-2">
           <div className="relative">
             <img
-              src={typeof imagePreview === "string" ? imagePreview : undefined}
+              src={typeof imagePreview === "string" 
+                ? imagePreview 
+                : undefined}
               alt="Preview"
               className="w-20 h-20 object-cover rounded-lg border border-zinc-700"
             />
@@ -84,7 +86,7 @@ const MessageInput = () => {
           />
           <input
             type="file"
-            accept="image/*"
+            accept=".png, .jpg, .jpeg, .webp"
             className="hidden"
             ref={fileInputRef}
             onChange={handleImageChange}
@@ -93,7 +95,9 @@ const MessageInput = () => {
           <button
             type="button"
             className={`hidden sm:flex btn btn-circle
-                     ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
+                     ${imagePreview 
+                      ? "text-emerald-500" 
+                      : "text-zinc-400"}`}
             onClick={() => fileInputRef.current?.click()}
           >
             <Image size={20} />

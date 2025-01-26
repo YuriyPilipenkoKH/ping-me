@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useChatStore } from '../../store/useChatStore'
+import SidebarSkeleton from '../skeletons/SidebarSkeleton'
 
 const Sidebar = () => {
  const {
@@ -10,7 +11,7 @@ const Sidebar = () => {
     isUsersLoading
     } = useChatStore()
     const onlineUsers =[]
-    
+
     useEffect(() => {
       getUsers();
     }, [getUsers]);

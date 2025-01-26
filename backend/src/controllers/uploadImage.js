@@ -3,7 +3,7 @@ import cloudinary from '../lib/cloudinary.js';
 import User from '../models/user.model.js';
 
 export const uploadImage = async (req, res) => {
-  console.log('uploadImage');
+  // console.log('uploadImage');
 
   const userId = req.user._id
   if (!userId) {
@@ -21,7 +21,7 @@ export const uploadImage = async (req, res) => {
 
     // Handle file uploads
     busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
-      console.log(`Uploading file: ${filename}`);
+      // console.log(`Uploading file: ${filename}`);
 
       try {
         const uploadResponse = await new Promise((resolve, reject) => {
@@ -38,7 +38,7 @@ export const uploadImage = async (req, res) => {
                 console.error('Error during Cloudinary upload:', error);
                 reject(error);
               } else {
-                console.log('Cloudinary upload result:', result);
+                // console.log('Cloudinary upload result:', result);
                 resolve(result);
               }
             }
@@ -51,7 +51,7 @@ export const uploadImage = async (req, res) => {
 
         const updatedUser = await User.findByIdAndUpdate(
           userId,
-          { profilePic: uploadResponse.secure_url },
+          { image: uploadResponse.secure_url },
           { new: true }
         );
 
@@ -67,7 +67,7 @@ export const uploadImage = async (req, res) => {
 
     // Finish event
     busboy.on('finish', () => {
-      console.log('Busboy finished parsing the request.');
+      // console.log('Busboy finished parsing the request.');
     });
 
     req.pipe(busboy); // Pipe the incoming request to Busboy for parsing
@@ -80,10 +80,3 @@ export const uploadImage = async (req, res) => {
   }
 };
 
-
-// return res.status(200).json(
-//   {
-//      message: 'User updated successfully',
-//      imageUrl: uploadResponse.secure_url,
-//     //  user: updateUser
-//     })

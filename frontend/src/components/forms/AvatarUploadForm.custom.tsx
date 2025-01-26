@@ -5,11 +5,12 @@ import { Camera, } from "lucide-react";
 import { cn } from "../../lib/cn";
 
 
-const AvatarUploadForm = () => {
+const AvatarUploadFormCustom = () => {
     const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
     const [selectedImg, setSelectedImg] =  useState<string | null>(null);
     const [file, setFile] = useState<File | null>(null); 
     console.log(authUser);
+    console.log('selectedImg.cus',selectedImg);
 
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0]; // Use optional chaining to handle null or undefined
@@ -19,7 +20,9 @@ const AvatarUploadForm = () => {
         return;
       }
       setFile(file)
+      setSelectedImg(URL.createObjectURL(file));
 
+      // await updateProfile({ image: selectedImg });
     }
 
   return (
@@ -27,10 +30,12 @@ const AvatarUploadForm = () => {
     <>
         <img
           src={selectedImg || authUser?.image || "/avatar.png"}
-          alt="Profile"
+          alt="Profile image"
           className="size-32 rounded-full object-cover border-4 "
         />
-      <form className="relative">
+      <form 
+      
+      className="relative">
         <label
           htmlFor="avatar-upload"
           className={cn('absolute bottom-0 right-0 bg-base-content hover:scale-105  p-2 rounded-full cursor-pointer transition-all duration-200',
@@ -52,4 +57,4 @@ const AvatarUploadForm = () => {
   )
 }
 
-export default AvatarUploadForm
+export default AvatarUploadFormCustom

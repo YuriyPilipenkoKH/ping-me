@@ -106,7 +106,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
   updateProfile: async (data) => {
     set({ isUpdatingProfile: true });
     try {
-      const response = await axios.put("/auth/update-profile", data);
+      const response = await axios.put("/auth/upload", data);
       if(response.data){
       set({ authUser: response.data.user });
       toast.success(response.data.message);

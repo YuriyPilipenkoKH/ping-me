@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react'
+import  { useEffect, useRef } from 'react'
 import { useChatStore } from '../../store/useChatStore';
 import { useAuthStore } from '../../store/useAuthStore';
 import { formatMessageTime } from '../../lib/formatMessageTime';
 import MessageInput from './MessageInput';
 import ChatHeader from './ChatHeader';
+import MessageSkeleton from '../skeletons/MessageSkeleton';
 
 const ChatContainer = () => {
   const {
@@ -15,7 +16,7 @@ const ChatContainer = () => {
     unsubscribeFromMessages,
   } = useChatStore();
   const { authUser } = useAuthStore();
-  const messageEndRef = useRef(null);
+  const messageEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     getMessages(selectedUser?._id || "");
@@ -48,16 +49,16 @@ const ChatContainer = () => {
         {messages.map((message) => (
           <div
             key={message._id}
-            className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`}
+            className={`chat ${message.senderId === authUser?._id ? "chat-end" : "chat-start"}`}
             ref={messageEndRef}
           >
             <div className=" chat-image avatar">
               <div className="size-10 rounded-full border">
                 <img
                   src={
-                    message.senderId === authUser._id
-                      ? authUser.profilePic || "/avatar.png"
-                      : selectedUser.profilePic || "/avatar.png"
+                    message.senderId === authUser?._id
+                      ? authUser?.image || "/avatar.png"
+                      : selectedUser?.image || "/avatar.png"
                   }
                   alt="profile pic"
                 />

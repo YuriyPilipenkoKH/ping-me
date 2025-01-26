@@ -11,7 +11,7 @@ interface useChatStoreTypes {
   isUsersLoading: boolean,
   isMessagesLoading: boolean,
   getUsers: () => Promise<void>
-  getMessages: (messageData:Message) => Promise<void>
+  getMessages: (userId:string) => Promise<void>
 }
 
 export const useChatStore = create<useChatStoreTypes>((set, get) => ({
@@ -34,15 +34,17 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
       set({ isUsersLoading: false });
     }
   },
-  getMessages: async (messageData) => {
-    const { selectedUser, messages } = get();
+  getMessages: async (userId) => {
+    set({ isMessagesLoading: true });
     try {
-      const res = await axios.post(`/messages/send/${selectedUser?._id}`, messageData);
-      set({ messages: [...messages, res.data] });
+      const res = await axios.get(`/messages/${userId}`);
+      set({ messages: res.data });
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {
         toast.error(error.response.data.message);
       }
+   } finally {
+      set({ isMessagesLoading: false });
     }
   }
 }))

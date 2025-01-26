@@ -1,5 +1,8 @@
 import React from 'react'
 import { useChatStore } from '../store/useChatStore';
+import Sidebar from '../components/home/Sidebar';
+import NoChatSelected from '../components/home/NoChatSelected';
+import ChatContainer from '../components/home/ChatContainer';
 
 const HomePage = () => {
   const { selectedUser } = useChatStore();

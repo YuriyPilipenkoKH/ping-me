@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useChatStore } from "../../store/useChatStore";
 
 const MessageInput = () => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState<string>("");
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { sendMessage } = useChatStore();

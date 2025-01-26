@@ -55,5 +55,14 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
   setSelectedUser: (selectedUser) => set({ selectedUser }),
   subscribeToMessages: () => {},
   unsubscribeFromMessages: () => {},
-  sendMessage: async (messageData) => {},
+  sendMessage: async (messageData) => {
+    const { selectedUser, messages } = get();
+    try {
+      const res = await axios.post(`/messages/send/${selectedUser?._id}`, messageData);
+      set({ messages: [...messages, res.data] });
+    } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response) {
+        toast.error(error.response.data.message);
+  }}
+}
 }))

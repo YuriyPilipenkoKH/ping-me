@@ -33,7 +33,7 @@ const LoginForm = () => {
 
     const onSubmit = async (data: LoginSchemaType) => {
       const response = await logIn(data)
-      if(response) reset()
+      // if(response) reset()
       }
     const handleInputChange =   (field: keyof LoginSchemaType) => {
       if(logError) setLogError('')
@@ -60,7 +60,7 @@ const LoginForm = () => {
               {...register('password', 
               { onChange: handleInputChange })}
               placeholder=	{( isSubmitting )? "Processing" : "•••••"}
-              type = {show ? 'text' : 'password' }
+              type = {!show ? 'text' : 'password' }
               />
                <button
           type="button"

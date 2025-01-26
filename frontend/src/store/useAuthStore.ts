@@ -69,7 +69,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
   
   },
   logIn : async (data) => {
-
+    console.log('data',data);
     set({ isLoggingIn: true });
   
     try {
@@ -109,7 +109,9 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
     try {
       const formData = new FormData();
       formData.append('file', data.image);
-      const response = await axios.put("/auth/upload", formData);
+      const response = await axios.put("/auth/upload", formData,{
+          headers: { "Content-Type": "multipart/form-data", },
+      });
       if(response.data){
       set({ authUser: response.data.user });
       toast.success(response.data.message);

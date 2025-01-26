@@ -27,14 +27,13 @@ const AvatarUploadFormCustom = () => {
 
   return (
 
-    <>
+    <div  className="flex flex-col items-center gap-4">
         <img
           src={selectedImg || authUser?.image || "/avatar.png"}
           alt="Profile image"
           className="size-32 rounded-full object-cover border-4 "
         />
       <form 
-      
       className="relative">
         <label
           htmlFor="avatar-upload"
@@ -53,7 +52,10 @@ const AvatarUploadFormCustom = () => {
               />
             </label>
       </form>
-    </>
+      <p className="text-sm text-zinc-400">
+      {isUpdatingProfile ? "Uploading..." : "Click the camera icon to update your photo"}
+    </p>
+    </div>
   )
 }
 

@@ -1,5 +1,4 @@
 import { Send } from 'lucide-react';
-import React from 'react'
 import { useThemeStore } from '../store/useThemeStore';
 import { PREVIEW_MESSAGES, THEMES } from '../constants';
 
@@ -22,7 +21,10 @@ const SettingsPage = () => {
                 group flex flex-col items-center gap-1.5 p-2 rounded-lg transition-colors
                 ${theme === t ? "bg-base-200" : "hover:bg-base-200/50"}
               `}
-              onClick={() => setTheme(t)}
+              onClick={() => {
+                setTheme(t)
+                // document.documentElement.setAttribute('data-theme', theme);
+              }}
             >
               <div className="relative h-8 w-full rounded-md overflow-hidden" data-theme={t}>
                 <div className="absolute inset-0 grid grid-cols-4 gap-px p-1">

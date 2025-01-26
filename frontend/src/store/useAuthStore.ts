@@ -22,8 +22,6 @@ interface AuthStoreTypes {
   logIn: (data: LoginSchemaType) => Promise<boolean | undefined>
   logOut: () => Promise<void>
   updateProfile: (data: img) => Promise<void>
-
-
 }
 
 export const useAuthStore = create<AuthStoreTypes>((set) => ({

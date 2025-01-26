@@ -1,8 +1,8 @@
-import { useThemeStore } from '../store/useThemeStore';
-
+import PreviewSection from '../components/settings/PreviewSection';
+import ThemesSection from '../components/settings/ThemesSection';
 
 const SettingsPage = () => {
-  const { theme, setTheme } = useThemeStore();
+
   return (
     <div className="h-screen container mx-auto px-4 pt-20 max-w-5xl">
       <div className="space-y-6">
@@ -10,11 +10,8 @@ const SettingsPage = () => {
           <h2 className="text-lg font-semibold">Theme</h2>
           <p className="text-sm text-base-content/70">Choose a theme for your chat interface</p>
         </div>
-
-
-
-        {/* Preview Section */}
-
+          <ThemesSection/>
+          <PreviewSection/>
       </div>
     </div>
   );

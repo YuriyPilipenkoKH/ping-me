@@ -1,6 +1,9 @@
-import React from 'react'
+
+import { THEMES } from '../../constants'
+import { useThemeStore } from '../../store/useThemeStore';
 
 const ThemesSection = () => {
+    const { theme, setTheme } = useThemeStore();
   return (
     <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
     {THEMES.map((t) => (

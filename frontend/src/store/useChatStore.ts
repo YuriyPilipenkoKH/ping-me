@@ -8,11 +8,12 @@ import { useAuthStore } from "./useAuthStore";
 
 
 interface useChatStoreTypes {
-  messages: Message[],
+  messages: Message[]
   users: User[],
-  selectedUser:User | null,
-  isUsersLoading: boolean,
-  isMessagesLoading: boolean,
+  selectedUser:User | null
+  isUsersLoading: boolean
+  isMessagesLoading: boolean
+  isMessageSending: boolean
   getUsers: () => Promise<void>
   getMessages: (data: string) => Promise<void>
   setSelectedUser: (data: User | null) => void
@@ -27,6 +28,7 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
   selectedUser: null,
   isUsersLoading: false,
   isMessagesLoading: false,
+  isMessageSending: false,
   getUsers: async () => {
     set({ isUsersLoading: true })
     try {
@@ -75,7 +77,7 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
     socket?.off("newMessage");
   },
   sendMessage: async (messageData) => {
-
+    set({ isMessageSending:true })
     const { selectedUser, messages } = get();
     try {
       const res = await axios.post(`/messages/send/${selectedUser?._id}`, messageData);
@@ -84,5 +86,8 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
       if (error instanceof AxiosError && error.response) {
         toast.error(error.response.data.message);
   }}
+  finally{
+    set({ isMessageSending:false })
+  }
 }
 }))

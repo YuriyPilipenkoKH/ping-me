@@ -29,9 +29,7 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
   getUsers: async () => {
     set({ isUsersLoading: true })
     try {
-      const res = await axios.get('/messages/users',{
-        headers: { "Content-Type": "application/json" }
-      })
+      const res = await axios.get('/messages/users')
       set({ users: res.data });
 
     } catch (error: unknown) {

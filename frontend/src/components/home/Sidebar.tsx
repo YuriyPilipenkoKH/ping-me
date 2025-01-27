@@ -21,9 +21,9 @@ const Sidebar = () => {
       getUsers();
     }, [getUsers]);
   
-    // const filteredUsers = showOnlineOnly
-    //   ? users.filter((user) => onlineUsers.includes(user._id))
-    //   : users;
+    const filteredUsers = showOnlineOnly
+      ? users.filter((user) => onlineUsers.includes(user._id))
+      : users;
   
     if (isUsersLoading) return <SidebarSkeleton />;
     return (
@@ -49,7 +49,7 @@ const Sidebar = () => {
         </div>
   
         <div className="overflow-y-auto w-full py-3">
-          {/* {users.map((user) => (
+          {filteredUsers.map((user) => (
             <button
               key={user._id}
               onClick={() => setSelectedUser(user)}
@@ -81,11 +81,11 @@ const Sidebar = () => {
                 </div>
               </div>
             </button>
-          ))} */}
+          ))}
   
-          {/* {users.length === 0 && (
+          {filteredUsers.length === 0 && (
             <div className="text-center text-zinc-500 py-4">No online users</div>
-          )} */}
+          )}
         </div>
       </aside>
     );

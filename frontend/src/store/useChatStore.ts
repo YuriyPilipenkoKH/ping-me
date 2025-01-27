@@ -4,6 +4,7 @@ import { User } from "../types/userTypes";
 import { Message, MessageInput } from "../types/messageTypes";
 import  { AxiosError } from "axios";
 import { axios } from "../lib/axios";
+import { useAuthStore } from "./useAuthStore";
 
 
 interface useChatStoreTypes {
@@ -54,9 +55,24 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
     }
   },
   setSelectedUser: (selectedUser) => set({ selectedUser }),
-  subscribeToMessages: () => {},
+  subscribeToMessages: () => {
+    const { selectedUser } = get();
+    if (!selectedUser) return;
+
+    const socket = useAuthStore.getState().socket;
+
+    socket?.on("newMessage", (newMessage) => {
+      const isMessageSentFromSelectedUser = newMessage.senderId === selectedUser._id;
+      if (!isMessageSentFromSelectedUser) return;
+
+      set({
+        messages: [...get().messages, newMessage],
+      });
+    });
+  },
   unsubscribeFromMessages: () => {},
   sendMessage: async (messageData) => {
+
     const { selectedUser, messages } = get();
     try {
       const res = await axios.post(`/messages/send/${selectedUser?._id}`, messageData);

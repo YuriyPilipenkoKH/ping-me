@@ -14,7 +14,7 @@ router.get('/:id', protectRoute , getMessages );
 
 router.post('/upload-pic', protectRoute , upload.single('file'), multerUploader );
 
-router.post('/send', protectRoute, sendMessage );
+router.post('/send/:id', protectRoute, sendMessage );
 
 
 export default router;

@@ -81,21 +81,10 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
     set({ isMessageSending:true })
     const { selectedUser, messages } = get();
 
-    const formData = new FormData();
-    if(selectedUser){
-      formData.append('receiverId', selectedUser._id)
-    }
-    if (data.image) {
-        formData.append('file', data.image);
-      }
-    if (data.text) {
-      formData.append('text', data.text);  
-    }
     try {
 
-      const res =await axios.post("/messages/send", formData,{
-          headers: { "Content-Type": "multipart/form-data", },
-      });
+      const res =await axios.post(`/messages/send/${selectedUser?._id}`,
+        data);
       if(res.data){
         toast.success(res.data.message);
         set({ messages: [...messages, res.data] });

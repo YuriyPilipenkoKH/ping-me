@@ -47,7 +47,9 @@ const ChatContainer = () => {
         {messages.map((message) => (
           <div
             key={message._id}
-            className={`chat ${message.senderId === authUser?._id ? "chat-end" : "chat-start"}`}
+            className={`chat ${message.senderId === authUser?._id 
+              ? "chat-end" 
+               : "chat-start"}`}
             ref={messageEndRef}
           >
             <div className=" chat-image avatar">

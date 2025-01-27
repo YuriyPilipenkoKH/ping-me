@@ -7,6 +7,7 @@ import { signUpSchemaType } from '../models/signUpSchema';
 import { LoginSchemaType } from '../models/loginSchema';
 import { wait } from '../lib/wait';
 import capitalize from '../lib/capitalize';
+import { io, Socket } from "socket.io-client";
 
 interface img {
   image: File
@@ -18,6 +19,7 @@ interface AuthStoreTypes {
   isLoggingIn: boolean
   isUpdatingProfile: boolean
   onlineUsers: string[],
+  socket: Socket | null,
   checkAuth: () => Promise<void>
   signUp: (data: signUpSchemaType) => Promise<boolean | undefined>
   logIn: (data: LoginSchemaType) => Promise<boolean | undefined>
@@ -32,6 +34,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
   isLoggingIn: false,
   isUpdatingProfile: false,
   onlineUsers: [],
+  socket: null,
   checkAuth: async() =>{
     try {
       const response = await axios.get('/auth/check')

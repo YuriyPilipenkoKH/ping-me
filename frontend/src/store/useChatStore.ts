@@ -70,7 +70,10 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
       });
     });
   },
-  unsubscribeFromMessages: () => {},
+  unsubscribeFromMessages: () => {
+    const socket = useAuthStore.getState().socket;
+    socket?.off("newMessage");
+  },
   sendMessage: async (messageData) => {
 
     const { selectedUser, messages } = get();

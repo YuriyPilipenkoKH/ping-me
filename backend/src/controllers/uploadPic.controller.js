@@ -2,7 +2,17 @@ import cloudinary from 'cloudinary';
 import User from '../models/user.model.js'; // Adjust import path if necessary
 
 export const uploadPic = async(req, res) => {
-  console.log('updateProfile started');
+  console.log('uploadPic started');
+
+  const userId = req.user._id
+  if (!userId) {
+    return res.status(400).json({ message: 'User ID not found' });
+  }
+  console.log('User ID:', userId);
+  if (!req.headers['content-type']?.includes('multipart/form-data')) {
+    return res.status(400).json({ message: 'Invalid content type' });
+  }
+
   
   try {
     const { image } = req.body;

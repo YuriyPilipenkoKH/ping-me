@@ -3,18 +3,18 @@ import cloudinary from '../lib/cloudinary.js';
 import User from '../models/user.model.js';
 
 export const uploadAvatar = async (req, res) => {
-  // console.log('uploadImage');
+  // console.log('uploadAvatar');
 
   const userId = req.user._id
   if (!userId) {
     return res.status(400).json({ message: 'User ID not found' });
   }
+  console.log('User ID:', userId);
 
   if (!req.headers['content-type']?.includes('multipart/form-data')) {
     return res.status(400).json({ message: 'Invalid content type' });
   }
 
-  console.log('User ID:', userId);
 
   try {
     const busboy = new Busboy({ headers: req.headers });

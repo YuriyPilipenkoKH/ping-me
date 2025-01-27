@@ -2,7 +2,7 @@ import cloudinary from 'cloudinary';
 import Busboy from 'busboy';
 
 
-export const uploadPic = async(req, res) => {
+export const sendMessage = async(req, res) => {
   console.log('uploadPic started');
 
   const userId = req.user._id

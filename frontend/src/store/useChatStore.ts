@@ -77,12 +77,27 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
     const socket = useAuthStore.getState().socket;
     socket?.off("newMessage");
   },
-  sendMessage: async (messageData) => {
+  sendMessage: async (data) => {
     set({ isMessageSending:true })
     const { selectedUser, messages } = get();
+
+    const formData = new FormData();
+    if (data.image) {
+        formData.append('file', data.image);
+      }
+    if (data.text) {
+      formData.append('text', data.text);
+    }
     try {
-      const res = await axios.post(`/messages/send/${selectedUser?._id}`, messageData);
-      set({ messages: [...messages, res.data] });
+
+      const res =await axios.post("/messages/send", formData,{
+          headers: { "Content-Type": "multipart/form-data", },
+      });
+      if(res.data){
+        toast.success(res.data.message);
+        set({ messages: [...messages, res.data] });
+        }
+
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {
         toast.error(error.response.data.message);

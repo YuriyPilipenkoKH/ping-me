@@ -1,7 +1,8 @@
 import express from 'express';
 import { protectRoute } from '../middleware/auth.middleware.js';
-import { getMessages, getUsersForSidebar, sendMessage } from '../controllers/message.controller.js';
-import { uploadPic } from '../controllers/uploadPic.controller.js';
+import { getMessages, getUsersForSidebar} from '../controllers/message.controller.js';
+import { sendMessage } from '../controllers/sendMessage.controller.js';
+
 
 const router = express.Router();
 
@@ -9,9 +10,9 @@ router.get('/users', protectRoute , getUsersForSidebar );
 
 router.get('/:id', protectRoute , getMessages );
 
-router.post('/send/:id', protectRoute , sendMessage );
+router.post('/send/:id', protectRoute  );
 
-router.put('/upload-pic', protectRoute, uploadPic );
+router.post('/send', protectRoute, sendMessage );
 
 
 export default router;

@@ -8,13 +8,10 @@ import { LoginSchemaType } from '../models/loginSchema';
 import { wait } from '../lib/wait';
 import capitalize from '../lib/capitalize';
 import { io, Socket } from "socket.io-client";
+import { img } from '../types/messageTypes';
 
 const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:5000" : "/";
 
-
-interface img {
-  image: File
-}
 interface AuthStoreTypes {
   authUser: User | null 
   isCheckingAuth: boolean

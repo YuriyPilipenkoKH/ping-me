@@ -5,35 +5,36 @@ import { useChatStore } from "../../store/useChatStore";
 
 const MessageInput = () => {
   const [text, setText] = useState<string>("");
-  const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
-  const [file, setFile] = useState<File | null>(null); 
-  const [selectedImg, setSelectedImg] =  useState<string >('');
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [file, setFile] = useState<File | undefined>(undefined); 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { sendMessage, isMessageSending } = useChatStore();
+  const { sendMessage, sendImage, isMessageSending } = useChatStore();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    if (!file?.type.startsWith("image/")) {
+        toast.error("Please select an image file");
+        return;
+      }
     if (file.size > 5 * 1024 * 1024) { 
       toast.error("File size exceeds the limit of 5MB.");
       return;
     }
     setFile(file)
-    setSelectedImg(URL.createObjectURL(file));
-    // if (!file?.type.startsWith("image/")) {
-    //   toast.error("Please select an image file");
-    //   return;
-    // }
+    setImagePreview(URL.createObjectURL(file));
+      
+      // const reader = new FileReader();
+      // reader.onloadend = () => {
+        // setImagePreview(reader.result);
+      // };
+      // reader.readAsDataURL(file);
 
-    // const reader = new FileReader();
-    // reader.onloadend = () => {
-    //   setImagePreview(reader.result);
-    // };
-    // reader.readAsDataURL(file);
   };
 
   const removeImage = () => {
     setImagePreview(null);
+    setFile(undefined)
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
@@ -42,13 +43,12 @@ const MessageInput = () => {
     if (!text.trim() && !imagePreview) return;
 
     try {
-      // Convert imagePreview to a string or undefined
-    const imageToSend = typeof imagePreview === "string" ? imagePreview : undefined;
-
-      await sendMessage({
-        text: text.trim(),
-        image: imageToSend,
-      });
+      if (text){
+        await sendMessage({ text: text.trim() });
+      }
+      if (file) {
+        await sendImage({image: file,})
+      }
 
       // Clear form
       setText("");
@@ -66,10 +66,10 @@ const MessageInput = () => {
           <div className="relative">
             <img
               src={typeof imagePreview === "string" 
-                ? imagePreview 
+                ? imagePreview
                 : undefined}
               alt="Preview"
-              className="w-20 h-20 object-cover rounded-lg border border-zinc-700"
+              className="w-40 h-40 object-cover rounded-lg border border-zinc-700"
             />
             <button
               onClick={removeImage}

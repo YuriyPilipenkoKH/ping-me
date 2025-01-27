@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import toast from "react-hot-toast";
 import { User } from "../types/userTypes";
-import { Message, MessageInput } from "../types/messageTypes";
+import { img, Message, MessageInput } from "../types/messageTypes";
 import  { AxiosError } from "axios";
 import { axios } from "../lib/axios";
 import { useAuthStore } from "./useAuthStore";
@@ -20,6 +20,7 @@ interface useChatStoreTypes {
   subscribeToMessages: () => void
   unsubscribeFromMessages: () => void
   sendMessage:  (data: MessageInput) => Promise<void>
+  sendImage:  (data: img) => Promise<void>
 }
 
 export const useChatStore = create<useChatStoreTypes>((set, get) => ({
@@ -89,5 +90,24 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
   finally{
     set({ isMessageSending:false })
   }
-}
+  },
+  sendImage: async  (data) => {
+    set({ isMessageSending:true })
+    try {
+      const formData = new FormData();
+      formData.append('file', data.image);
+      const response = await axios.put("/auth/upload-img", formData,{
+          headers: { "Content-Type": "multipart/form-data", },
+      });
+      if(response.data){
+      toast.success(response.data.message);
+      }
+    } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response) {
+        toast.error(error.response.data.message);
+    }}
+    finally{
+      set({ isMessageSending:false })
+    }
+  }
 }))

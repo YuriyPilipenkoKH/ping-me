@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
+import {app, server} from './lib/socket.js'
 import authRoutes from './routes/auth.route.js';
 import messageRoutes from './routes/message.route.js';
 import connectDB from './lib/db.js';
@@ -11,8 +12,6 @@ import bodyParser from 'body-parser';
 dotenv.config();
 const PORT = process.env.PORT || 5500;
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
-
-const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

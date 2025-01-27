@@ -12,7 +12,6 @@ const Sidebar = () => {
     setSelectedUser, 
     isUsersLoading
     } = useChatStore()
-    console.log('users',users);
  
     const { onlineUsers } = useAuthStore();
     const [showOnlineOnly, setShowOnlineOnly] = useState<boolean>(false);

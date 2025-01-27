@@ -45,7 +45,7 @@ export const useAuthStore = create<AuthStoreTypes>((set,get) => ({
       const response = await axios.get('/auth/check')
       // console.log('response',response.data);
       set({authUser: response.data})
-      // get().connectSocket();
+      get().connectSocket();
     } catch (error) {
       set({authUser: null})
       console.log('error in checkAuth', error)
@@ -63,6 +63,7 @@ export const useAuthStore = create<AuthStoreTypes>((set,get) => ({
         toast.success('Account created!')
         await wait(1000) 
         toast.success(`Welcome, ${capitalize(response.data.user.name)} !`)
+        get().connectSocket();
         return true
       }
     } catch (error: unknown) {
@@ -87,7 +88,7 @@ export const useAuthStore = create<AuthStoreTypes>((set,get) => ({
         set({authUser: response.data.user})
         await wait(1000)
         toast.success(`Hello, ${capitalize(response.data.user.name)} !`)
-
+        get().connectSocket();
       return true
     } 
     } catch (error: unknown) {
@@ -107,6 +108,7 @@ export const useAuthStore = create<AuthStoreTypes>((set,get) => ({
         set({authUser: null})
         toast.success(`Logout successful !`)
       }
+      get().disconnectSocket();
     }  catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {
         toast.error(error.response.data.message);

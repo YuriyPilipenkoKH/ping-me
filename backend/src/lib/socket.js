@@ -1,9 +1,9 @@
 import {Server} from 'socket.io';
 import http from 'http' ;
 import express from 'express';
-import dotenv from 'dotenv';
 
-dotenv.config();
+
+
 const PORT = process.env.PORT || 5500;
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
 
@@ -15,20 +15,26 @@ const io = new Server(server, {
     origin: [CLIENT_ORIGIN]
   }
 })
+export function getReceiverSocketId(userId) {
+  return userSocketMap[userId];
+}
+
+// used to store online users
+const userSocketMap = {}; // {userId: socketId}
 
 io.on("connection", (socket) => {
   console.log("A user connected", socket.id);
 
-  // const userId = socket.handshake.query.userId;
-  // if (userId) userSocketMap[userId] = socket.id;
+  const userId = socket.handshake.query.userId;
+  if (userId) userSocketMap[userId] = socket.id;
 
   // io.emit() is used to send events to all the connected clients
-  // io.emit("getOnlineUsers", Object.keys(userSocketMap));
+  io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
   socket.on("disconnect", () => {
     console.log("A user disconnected", socket.id);
-    // delete userSocketMap[userId];
-    // io.emit("getOnlineUsers", Object.keys(userSocketMap));
+    delete userSocketMap[userId];
+    io.emit("getOnlineUsers", Object.keys(userSocketMap));
   });
 });
 

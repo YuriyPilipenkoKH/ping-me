@@ -9,6 +9,9 @@ import { wait } from '../lib/wait';
 import capitalize from '../lib/capitalize';
 import { io, Socket } from "socket.io-client";
 
+const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:5000" : "/";
+
+
 interface img {
   image: File
 }
@@ -18,16 +21,18 @@ interface AuthStoreTypes {
   isSigningUp: boolean
   isLoggingIn: boolean
   isUpdatingProfile: boolean
-  onlineUsers: string[],
-  socket: Socket | null,
+  onlineUsers: string[]
+  socket: Socket | null
   checkAuth: () => Promise<void>
   signUp: (data: signUpSchemaType) => Promise<boolean | undefined>
   logIn: (data: LoginSchemaType) => Promise<boolean | undefined>
   logOut: () => Promise<void>
   updateProfile: (data: img) => Promise<void>
+  connectSocket: () => void
+  disconnectSocket: () => void
 }
 
-export const useAuthStore = create<AuthStoreTypes>((set) => ({
+export const useAuthStore = create<AuthStoreTypes>((set,get) => ({
   authUser: null,
   isCheckingAuth: true,
   isSigningUp: false,
@@ -40,6 +45,7 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
       const response = await axios.get('/auth/check')
       // console.log('response',response.data);
       set({authUser: response.data})
+      // get().connectSocket();
     } catch (error) {
       set({authUser: null})
       console.log('error in checkAuth', error)
@@ -126,5 +132,25 @@ export const useAuthStore = create<AuthStoreTypes>((set) => ({
     } finally {
       set({ isUpdatingProfile: false });
     }
-  }
+  },
+  connectSocket: () => {
+    const { authUser } = get();
+    if (!authUser || get().socket?.connected) return;
+
+    const socket = io(BASE_URL, {
+      query: {
+        userId: authUser._id,
+      },
+    });
+    socket.connect();
+
+    set({ socket: socket });
+
+    socket.on("getOnlineUsers", (userIds) => {
+      set({ onlineUsers: userIds });
+    });
+  },
+  disconnectSocket: () => {
+    if (get().socket?.connected) get().socket?.disconnect();
+  },
 }))

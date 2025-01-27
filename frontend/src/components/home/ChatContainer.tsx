@@ -10,7 +10,7 @@ const ChatContainer = () => {
   const {
     messages,
     getMessages,
-    isMessagesLoading,
+    isMessagesLoading,  
     selectedUser,
     subscribeToMessages,
     unsubscribeFromMessages,

@@ -117,7 +117,7 @@ export const useAuthStore = create<AuthStoreTypes>((set,get) => ({
     try {
       const formData = new FormData();
       formData.append('file', data.image);
-      const response = await axios.put("/auth/upload", formData,{
+      const response = await axios.put("/auth/upload-avatar", formData,{
           headers: { "Content-Type": "multipart/form-data", },
       });
       if(response.data){

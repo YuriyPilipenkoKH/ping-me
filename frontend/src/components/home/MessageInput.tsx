@@ -47,12 +47,13 @@ const MessageInput = () => {
         await sendMessage({ text: text.trim() });
       }
       if (file) {
-        await sendImage({image: file,})
+        await sendImage({ image: file })
       }
 
       // Clear form
       setText("");
       setImagePreview(null);
+      setFile(undefined)
       if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (error) {
       console.error("Failed to send message:", error);

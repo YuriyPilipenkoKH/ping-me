@@ -14,7 +14,8 @@ router.post('/login', login );
 router.post('/logout', logout );
 
 router.put('/update-profile', protectRoute, updateProfile );
-router.put('/upload', protectRoute, uploadImage );
+
+router.put('/upload-avatar', protectRoute, uploadImage );
 
 router.get('/check', protectRoute, checkAuth)
 

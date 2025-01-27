@@ -1,7 +1,7 @@
 import cloudinary from 'cloudinary';
 import User from '../models/user.model.js'; // Adjust import path if necessary
 
-export const updateProfile = async(req, res) => {
+export const uploadPic = async(req, res) => {
   console.log('updateProfile started');
   
   try {

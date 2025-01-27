@@ -1,7 +1,7 @@
 import express from 'express';
 import { checkAuth, login, logout, signup, updateProfile} from '../controllers/auth.controller.js';
 import { protectRoute } from '../middleware/auth.middleware.js';
-import { uploadImage } from '../controllers/uploadImage.js';
+import { uploadAvatar } from '../controllers/uploadAvatar.js';
 
 
 
@@ -15,10 +15,9 @@ router.post('/logout', logout );
 
 router.put('/update-profile', protectRoute, updateProfile );
 
-router.put('/upload-avatar', protectRoute, uploadImage );
+router.put('/upload-avatar', protectRoute, uploadAvatar );
 
 router.get('/check', protectRoute, checkAuth)
-
 
 
 export default router;

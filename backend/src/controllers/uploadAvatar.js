@@ -2,7 +2,7 @@ import Busboy from 'busboy';
 import cloudinary from '../lib/cloudinary.js';
 import User from '../models/user.model.js';
 
-export const uploadImage = async (req, res) => {
+export const uploadAvatar = async (req, res) => {
   // console.log('uploadImage');
 
   const userId = req.user._id

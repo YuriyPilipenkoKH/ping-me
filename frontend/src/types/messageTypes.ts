@@ -12,5 +12,8 @@ export interface img {
   image: File
 }
 
-export interface MessageInput extends Pick<Message, "text" > {}
+export interface MessageInput  {
+  text?: string
+  image?: File
+}
 

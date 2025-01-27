@@ -96,7 +96,7 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
     try {
       const formData = new FormData();
       formData.append('file', data.image);
-      const response = await axios.put("/auth/upload-pic", formData,{
+      const response = await axios.put("/messages/upload-pic", formData,{
           headers: { "Content-Type": "multipart/form-data", },
       });
       if(response.data){

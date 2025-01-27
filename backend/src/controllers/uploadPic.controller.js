@@ -1,5 +1,6 @@
 import cloudinary from 'cloudinary';
-import User from '../models/user.model.js'; // Adjust import path if necessary
+import Busboy from 'busboy';
+
 
 export const uploadPic = async(req, res) => {
   console.log('uploadPic started');
@@ -16,10 +17,9 @@ export const uploadPic = async(req, res) => {
   
   try {
     const busboy = new Busboy({ headers: req.headers });
-
     // Handle file uploads
     busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
-      // console.log(`Uploading file: ${filename}`);
+      console.log(`Uploading file: ${filename}`);
 
       try {
         const uploadResponse = await new Promise((resolve, reject) => {
@@ -45,27 +45,16 @@ export const uploadPic = async(req, res) => {
         });
         console.log('Upload complete:', uploadResponse.secure_url);
         return  uploadResponse.secure_url
-        // const updatedUser = await User.findByIdAndUpdate(
-        //   userId,
-        //   { image: uploadResponse.secure_url },
-        //   { new: true }
-        // );
 
-        // res.status(200).json({
-        //   message: 'Profile image uploaded successfully',
-        //   user : updatedUser,
-        // });
       } catch (error) {
         console.error('Error during file upload:', error);
         res.status(500).json({ message: 'File upload failed', error: error.message });
       }
     });
-
     // Finish event
     busboy.on('finish', () => {
       // console.log('Busboy finished parsing the request.');
     });
-
     req.pipe(busboy);
   
   } catch (error) {

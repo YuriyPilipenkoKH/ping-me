@@ -43,12 +43,16 @@ const MessageInput = () => {
     if (!text.trim() && !imagePreview) return;
 
     try {
-      if (text){
-        await sendMessage({ text: text.trim() });
-      }
-      if (file) {
-        await sendImage({ image: file })
-      }
+        await sendMessage({ 
+          text: text.trim() ,
+          image: file,
+        });
+  
+      // if (file) {
+      //   await sendImage({ 
+      //     image: file,
+      //    })
+      // }
 
       // Clear form
       setText("");

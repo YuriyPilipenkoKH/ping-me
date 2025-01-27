@@ -18,7 +18,6 @@ export const uploadAvatar = async (req, res) => {
 
   try {
     const busboy = new Busboy({ headers: req.headers });
-
     // Handle file uploads
     busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
       // console.log(`Uploading file: ${filename}`);

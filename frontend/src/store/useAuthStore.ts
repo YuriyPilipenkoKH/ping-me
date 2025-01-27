@@ -145,7 +145,6 @@ export const useAuthStore = create<AuthStoreTypes>((set,get) => ({
       },
     });
     socket.connect();
-
     set({ socket: socket });
 
     socket.on("getOnlineUsers", (userIds) => {

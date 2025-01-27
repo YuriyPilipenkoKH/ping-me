@@ -6,21 +6,30 @@ import { useChatStore } from "../../store/useChatStore";
 const MessageInput = () => {
   const [text, setText] = useState<string>("");
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
+  const [file, setFile] = useState<File | null>(null); 
+  const [selectedImg, setSelectedImg] =  useState<string >('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { sendMessage, isMessageSending } = useChatStore();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file?.type.startsWith("image/")) {
-      toast.error("Please select an image file");
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { 
+      toast.error("File size exceeds the limit of 5MB.");
       return;
     }
+    setFile(file)
+    setSelectedImg(URL.createObjectURL(file));
+    // if (!file?.type.startsWith("image/")) {
+    //   toast.error("Please select an image file");
+    //   return;
+    // }
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImagePreview(reader.result);
-    };
-    reader.readAsDataURL(file);
+    // const reader = new FileReader();
+    // reader.onloadend = () => {
+    //   setImagePreview(reader.result);
+    // };
+    // reader.readAsDataURL(file);
   };
 
   const removeImage = () => {

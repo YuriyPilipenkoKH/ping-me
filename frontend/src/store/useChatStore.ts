@@ -82,11 +82,14 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
     const { selectedUser, messages } = get();
 
     const formData = new FormData();
+    if(selectedUser){
+      formData.append('receiverId', selectedUser._id)
+    }
     if (data.image) {
         formData.append('file', data.image);
       }
     if (data.text) {
-      formData.append('text', data.text);
+      formData.append('text', data.text);  
     }
     try {
 

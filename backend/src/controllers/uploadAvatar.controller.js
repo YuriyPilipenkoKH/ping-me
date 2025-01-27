@@ -42,7 +42,6 @@ export const uploadAvatar = async (req, res) => {
               }
             }
           );
-
           file.pipe(stream); // Pipe the file stream to Cloudinary
         });
 
@@ -63,12 +62,10 @@ export const uploadAvatar = async (req, res) => {
         res.status(500).json({ message: 'File upload failed', error: error.message });
       }
     });
-    // Finish event
-    busboy.on('finish', () => {
-      // console.log('Busboy finished parsing the request.');
-    });
+
 
     req.pipe(busboy); // Pipe the incoming request to Busboy for parsing
+
   } catch (error) {
     console.error('Error uploading to Cloudinary:', error);
     return res.status(500).json({

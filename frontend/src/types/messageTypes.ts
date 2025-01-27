@@ -14,6 +14,6 @@ export interface img {
 
 export interface MessageInput  {
   text?: string
-  image?: File
+  image?: string
 }
 

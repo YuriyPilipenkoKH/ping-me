@@ -20,7 +20,7 @@ interface useChatStoreTypes {
   subscribeToMessages: () => void
   unsubscribeFromMessages: () => void
   sendMessage:  (data: MessageInput) => Promise<void>
-  sendImage:  (data: img) => Promise<void>
+  sendImage:  (data: img) => Promise<string>
 }
 
 export const useChatStore = create<useChatStoreTypes>((set, get) => ({
@@ -111,18 +111,22 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
   },
   sendImage: async  (data) => {
     set({ isMessageSending:true })
+    // const {  messages } = get();
     try {
       const formData = new FormData();
       formData.append('file', data.image);
-      const response = await axios.put("/messages/upload-pic", formData,{
+      const response = await axios.post(`/messages/upload-pic`, formData,{
           headers: { "Content-Type": "multipart/form-data", },
       });
       if(response.data){
       toast.success(response.data.message);
       }
+      return response.data.secure_url
+
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {
         toast.error(error.response.data.message);
+        return ''
     }}
     finally{
       set({ isMessageSending:false })

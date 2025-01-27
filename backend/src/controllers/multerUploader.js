@@ -1,6 +1,8 @@
+import cloudinary from "../lib/cloudinary.js";
 
 
 export const multerUploader = async (req, res) => {
+  const userId = req.user._id
   if (!req.file) {
     return res.status(400).json({ message: 'No file uploaded' });
   }
@@ -27,9 +29,9 @@ export const multerUploader = async (req, res) => {
         });
       }
     );
-
     // Pipe the file buffer to Cloudinary
     fileStream.end(req.file.buffer); // req.file.buffer contains the file's binary data
+
   } catch (error) {
     console.error('Error during file upload:', error);
     return res.status(500).json({ message: 'File upload failed', error: error.message });

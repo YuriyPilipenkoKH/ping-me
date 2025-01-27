@@ -7,6 +7,7 @@ const MessageInput = () => {
   const [text, setText] = useState<string>("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | undefined>(undefined); 
+  const [secureUrl, setSecureUrl] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { sendMessage, sendImage, isMessageSending } = useChatStore();
 
@@ -43,19 +44,18 @@ const MessageInput = () => {
     if (!text.trim() && !imagePreview) return;
 
     try {
-        await sendMessage({ 
-          text: text.trim() ,
-          image: file,
-        });
-  
-      // if (file) {
-      //   await sendImage({ 
-      //     image: file,
-      //    })
-      // }
-
+      
+      if (file) {
+      const uploadresult =  await sendImage({image: file,})
+        setSecureUrl(uploadresult)
+      }
+      
+      await sendMessage({ 
+        text: text.trim() ,
+        image: secureUrl,
+      });
       // Clear form
-      setText("");
+      setText("")
       setImagePreview(null);
       setFile(undefined)
       if (fileInputRef.current) fileInputRef.current.value = "";

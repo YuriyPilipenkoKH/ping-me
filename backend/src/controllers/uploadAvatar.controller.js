@@ -64,7 +64,6 @@ export const uploadAvatar = async (req, res) => {
         res.status(500).json({ message: 'File upload failed', error: error.message });
       }
     });
-
     // Finish event
     busboy.on('finish', () => {
       // console.log('Busboy finished parsing the request.');

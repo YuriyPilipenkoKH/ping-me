@@ -88,7 +88,7 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
         formData.append('text', data?.text);
       }
       const res =
-       await axios.post(`/messages/upload-pic/${selectedUser?._id}`, 
+       await axios.post(`/messages/send-message/${selectedUser?._id}`, 
         formData,
         { headers: { "Content-Type": "multipart/form-data", },});
       if(res.data){

@@ -17,6 +17,7 @@ const ChatContainer = () => {
   } = useChatStore();
   const { authUser } = useAuthStore();
   const messageEndRef = useRef<HTMLDivElement>(null);
+  console.log('messages',messages);
 
   useEffect(() => {
     getMessages(selectedUser?._id || "");
@@ -29,6 +30,15 @@ const ChatContainer = () => {
       messageEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
+  const handleRightClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault(); // Prevent the default context menu from appearing
+    console.log("Right-clicked on the div!");
+    
+    // Example: Show a custom context menu (replace this with your logic)
+    alert("Custom context menu triggered!");
+  };
+  
 
   if (isMessagesLoading) {
     return (
@@ -69,7 +79,9 @@ const ChatContainer = () => {
                 {formatMessageTime(message.createdAt)}
               </time>
             </div>
-            <div className="chat-bubble flex flex-col">
+            <div 
+              className="chat-bubble flex flex-col"
+              onContextMenu={(e) => handleRightClick(e)}>
               {message.image && (
                 <img
                   src={message.image}

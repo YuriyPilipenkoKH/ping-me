@@ -34,7 +34,7 @@ export const getMessages =  async (req,res) => {
     return res.status(500).json({ message: 'Server error' });
   }
 }
-
+// original controller not in use
 export const sendMessage =  async (req,res) => {
   try {
     const {text,image} = req.body

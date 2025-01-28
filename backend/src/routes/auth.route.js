@@ -2,7 +2,7 @@ import express from 'express';
 import { checkAuth, login, logout, signup, updateProfile} from '../controllers/auth.controller.js';
 import { protectRoute } from '../middleware/auth.middleware.js';
 import { uploadAvatar } from '../controllers/uploadAvatar.controller.js';
-
+import { upload} from '../lib/multer.js'
 
 
 const router = express.Router();
@@ -15,7 +15,7 @@ router.post('/logout', logout );
 
 router.put('/update-profile', protectRoute, updateProfile );
 
-router.put('/upload-avatar', protectRoute, uploadAvatar );
+router.put('/upload-avatar', protectRoute, upload.single('file'), uploadAvatar );
 
 router.get('/check', protectRoute, checkAuth)
 

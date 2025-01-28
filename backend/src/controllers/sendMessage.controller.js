@@ -17,6 +17,7 @@ export const sendMessage = async (req, res) => {
         const fileStream = cloudinary.uploader.upload_stream(
           {
             folder: `ping-me/users/${userId}/pics`,
+            // public_id: userId,
             overwrite: false,
             use_filename: true,
             unique_filename: true,

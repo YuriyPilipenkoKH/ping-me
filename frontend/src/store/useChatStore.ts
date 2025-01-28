@@ -146,15 +146,13 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
   },
   deleteMessage: async (id) => {
     set({ isMessageSending:true })
-  
-    // const  authUser = useAuthStore.getState(). authUser
-    try {
+      try {
       await axios.delete(`/messages/delete/${id}`);
       // Update the messages state by filtering out the deleted message
       set({
         messages: get().messages.filter((message) => message._id !== id),
       });
-      toast.success("Message deleted");
+      // toast.success("Message deleted");
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {
         toast.error(error.response.data.message);

@@ -17,7 +17,7 @@ const ChatContainer = () => {
   } = useChatStore();
   const { authUser } = useAuthStore();
   const messageEndRef = useRef<HTMLDivElement>(null);
-  console.log('messages',messages);
+
 
   useEffect(() => {
     getMessages(selectedUser?._id || "");
@@ -38,12 +38,11 @@ const ChatContainer = () => {
 
     // Find the image element inside the clicked div
     const imgElement = e.currentTarget.querySelector("img");
-
     // Get the `src` of the image, if it exists
     const imgSrc = imgElement ? imgElement.src : null;
 
-    console.log("Div ID:", divId);
-    console.log("Image src:", imgSrc);
+    console.log("DivID:", divId);
+    console.log("ImageSrc:", imgSrc);
   };
 
   if (isMessagesLoading) {

@@ -22,6 +22,7 @@ interface useChatStoreTypes {
   sendMessage:  (data: MessageInput) => Promise<void>
   sendImage:  (data: img) => Promise<void>
   sendText:  (data: txt) => Promise<void>
+  deleteMessage:  (data: string) => Promise<void>
 }
 
 export const useChatStore = create<useChatStoreTypes>((set, get) => ({
@@ -142,5 +143,19 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
   finally{
     set({ isMessageSending:false })
   }
+  },
+  deleteMessage: async (id) => {
+    const {  messages } = get();
+    try {
+      const res = 
+      await axios.delete(`/messages/delete/${id}` );
+      if(res.data){
+        set({ messages: [...messages, res.data] });
+       }
+    } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response) {
+        toast.error(error.response.data.message);
+    }
   }
+}
 }))

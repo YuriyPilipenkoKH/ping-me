@@ -61,3 +61,23 @@ export const sendMessage =  async (req,res) => {
     return res.status(500).json({ message: 'Server error' });
   }
 }
+
+export const deleteMessage =  async (req,res) => {
+  const { id } = req.params;
+  try {
+    const del = await Message.deleteOne({ _id: id });
+
+    if (del.deletedCount === 0) {
+      return res.status(404).json({ message: 'Message not found' });
+    }
+    res.status(200).json({
+      message: 'Message successfully removed',
+    });
+  } catch (error) {
+    console.log("error in deleteMessage controller"+error);
+    return res.status(500).json({ message: 'deleteMessage error' });
+  }
+
+}
+
+//DivID: 6798b23001ba85a893435a82

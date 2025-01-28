@@ -63,28 +63,3 @@ export const uploadAvatar = async (req, res) => {
   }
 };
 
-// const stream = cloudinary.uploader.upload_stream(
-//   {
-//     folder: `ping-me/users/${userId}`,
-//     public_id: userId,
-//     overwrite: true,
-//     use_filename: true,
-//     unique_filename: false,
-
-// console.log('Upload complete:', uploadResponse.secure_url);
-
-// const updatedUser = await User.findByIdAndUpdate(
-//   userId,
-//   { image: uploadResponse.secure_url },
-//   { new: true }
-// );
-
-// res.status(200).json({
-//   message: 'Profile image uploaded successfully',
-//   user : updatedUser,
-// });
-// } catch (error) {
-// console.error('Error during file upload:', error);
-// res.status(500).json({ message: 'File upload failed', error: error.message });
-// }
-// });

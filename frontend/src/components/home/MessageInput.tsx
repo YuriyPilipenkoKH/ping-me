@@ -7,10 +7,9 @@ const MessageInput = () => {
   const [text, setText] = useState<string>("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | undefined>(undefined); 
-  const [secureUrl, setSecureUrl] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { sendMessage, sendImage, isMessageSending } = useChatStore();
-  console.log(secureUrl);
+
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -47,13 +46,14 @@ const MessageInput = () => {
     try {
       
       if (file) {
-      const uploadResult =  await sendImage({image: file})
-        setSecureUrl(uploadResult)
+       await sendImage({
+        image: file,
+        text: text.trim() 
+      })
       }
-      if (text) {
+      if (text && !file) {
         await sendMessage({ 
           text: text.trim() ,
-          // image: secureUrl,
         });
       }
       // Clear form

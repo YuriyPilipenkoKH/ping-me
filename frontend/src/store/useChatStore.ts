@@ -103,6 +103,9 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
     try {
       const formData = new FormData();
       formData.append('file', data.image);
+      if(data.text){
+        formData.append('text', data?.text);
+      }
       const res =
        await axios.post(`/messages/upload-pic/${selectedUser?._id}`, 
         formData,

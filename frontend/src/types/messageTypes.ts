@@ -10,6 +10,7 @@ export interface Message {
 }
 export interface img {
   image: File
+  text?: string
 }
 
 export interface MessageInput  {

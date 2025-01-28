@@ -2,8 +2,8 @@ import { ModalBaseTypes } from "../types/modalTypes";
 
 export const DeletingMessageConfirmProps: ModalBaseTypes = {
   modalName: 'DeletingMessageConfirm',
-  title: 'Are you sure deleting',
-  text: 'There will be no return....',
+  title: 'Delete message',
+  text: '',
 };
 export const EditProfileProps: ModalBaseTypes = {
   modalName: 'EditProfile',

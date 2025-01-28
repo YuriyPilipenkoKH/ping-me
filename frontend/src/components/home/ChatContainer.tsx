@@ -1,4 +1,4 @@
-import  { useEffect, useRef } from 'react'
+import  { useEffect, useRef, useState } from 'react'
 import { useChatStore } from '../../store/useChatStore';
 import { useAuthStore } from '../../store/useAuthStore';
 import { formatMessageTime } from '../../lib/formatMessageTime';
@@ -7,6 +7,7 @@ import ChatHeader from './ChatHeader';
 import MessageSkeleton from '../skeletons/MessageSkeleton';
 import MainModal from '../modals/MainModal';
 import { DeletingMessageConfirmProps } from '../../data/modalProps';
+// import Menu from '../modals/Menu';
 
 const ChatContainer = () => {
   const {
@@ -19,6 +20,7 @@ const ChatContainer = () => {
   } = useChatStore();
   const { authUser } = useAuthStore();
   const messageEndRef = useRef<HTMLDivElement>(null);
+  const [showMenu, setShowMenu] = useState<boolean>(false)
 
 
   useEffect(() => {
@@ -46,6 +48,7 @@ const ChatContainer = () => {
     console.log("DivID:", divId);
     console.log("ImageSrc:", imgSrc);
 
+    setShowMenu(!showMenu)
     const modal = document.getElementById('my_modal_3') as HTMLDialogElement | null;
     if (modal) modal.showModal();
  
@@ -64,11 +67,11 @@ const ChatContainer = () => {
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader />
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 ">
         {messages.map((message) => (
           <div
             key={message._id}
-            className={`chat ${message.senderId === authUser?._id 
+            className={`chat relative ${message.senderId === authUser?._id 
               ? "chat-end" 
                : "chat-start"}`}
             ref={messageEndRef}
@@ -91,7 +94,7 @@ const ChatContainer = () => {
               </time>
             </div>
             <div 
-              className="chat-bubble flex flex-col"
+              className="chat-bubble flex flex-col relative"
               onContextMenu={(e) => handleRightClick(e)}
               id={message._id}>
               {message.image && (
@@ -102,6 +105,7 @@ const ChatContainer = () => {
                 />
               )}
               {message.text && <p>{message.text}</p>}
+            {/* {showMenu && <Menu/>} */}
             </div>
           </div>
         ))}
@@ -109,6 +113,7 @@ const ChatContainer = () => {
 
       <MessageInput />
       <MainModal modalProps={DeletingMessageConfirmProps}/>
+      {/* <Menu/> */}
     </div>
   );
 }

@@ -8,13 +8,15 @@ export interface Message {
   createdAt?:Date
   updatedAt?:Date
 }
-export interface img {
+export interface MessageInput  {
   image: File
   text?: string
 }
-
-export interface MessageInput  {
-  text?: string
-  image?: string
+export interface img {
+  image: File
 }
+export interface txt {
+  text: string
+}
+
 

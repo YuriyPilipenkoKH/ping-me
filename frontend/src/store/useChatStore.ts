@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import toast from "react-hot-toast";
 import { User } from "../types/userTypes";
-import { img, Message, MessageInput } from "../types/messageTypes";
+import { img, Message, MessageInput, txt } from "../types/messageTypes";
 import  { AxiosError } from "axios";
 import { axios } from "../lib/axios";
 import { useAuthStore } from "./useAuthStore";
@@ -20,7 +20,8 @@ interface useChatStoreTypes {
   subscribeToMessages: () => void
   unsubscribeFromMessages: () => void
   sendMessage:  (data: MessageInput) => Promise<void>
-  sendImage:  (data: img) => Promise<string>
+  sendImage:  (data: img) => Promise<void>
+  sendText:  (data: txt) => Promise<void>
 }
 
 export const useChatStore = create<useChatStoreTypes>((set, get) => ({
@@ -81,6 +82,51 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
     set({ isMessageSending:true })
     const { selectedUser, messages } = get();
     try {
+      const formData = new FormData();
+      formData.append('file', data.image);
+      if(data.text){
+        formData.append('text', data?.text);
+      }
+      const res =
+       await axios.post(`/messages/upload-pic/${selectedUser?._id}`, 
+        formData,
+        { headers: { "Content-Type": "multipart/form-data", },});
+      if(res.data){
+        set({ messages: [...messages, res.data] });
+       }
+      } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response) {
+        toast.error(error.response.data.message);
+    }}
+    finally{
+      set({ isMessageSending:false })
+    }
+  },
+  sendImage: async  (data) => {
+    set({ isMessageSending:true })
+    const { selectedUser, messages } = get();
+    try {
+      const formData = new FormData();
+      formData.append('file', data.image);
+      const res =
+       await axios.post(`/messages/upload-pic/${selectedUser?._id}`, 
+        formData,
+        { headers: { "Content-Type": "multipart/form-data", },});
+      if(res.data){
+        set({ messages: [...messages, res.data] });
+       }
+      } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response) {
+        toast.error(error.response.data.message);
+    }}
+    finally{
+      set({ isMessageSending:false })
+    }
+  },
+  sendText:async  (data) => {
+    set({ isMessageSending:true })
+    const { selectedUser, messages } = get();
+    try {
 
       const res = 
       await axios.post(`/messages/send/${selectedUser?._id}`,
@@ -96,31 +142,5 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
   finally{
     set({ isMessageSending:false })
   }
-  },
-  sendImage: async  (data) => {
-    set({ isMessageSending:true })
-    const { selectedUser, messages } = get();
-    try {
-      const formData = new FormData();
-      formData.append('file', data.image);
-      if(data.text){
-        formData.append('text', data?.text);
-      }
-      const res =
-       await axios.post(`/messages/upload-pic/${selectedUser?._id}`, 
-        formData,
-        { headers: { "Content-Type": "multipart/form-data", },});
-      if(res.data){
-        set({ messages: [...messages, res.data] });
-       }
-      return res.data.secure_url
-
-    } catch (error: unknown) {
-      if (error instanceof AxiosError && error.response) {
-        toast.error(error.response.data.message);
-    }}
-    finally{
-      set({ isMessageSending:false })
-    }
   }
 }))

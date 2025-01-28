@@ -8,7 +8,7 @@ const MessageInput = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | undefined>(undefined); 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { sendMessage, sendImage, isMessageSending } = useChatStore();
+  const { sendMessage, sendText, isMessageSending } = useChatStore();
 
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,13 +46,13 @@ const MessageInput = () => {
     try {
       
       if (file) {
-       await sendImage({
+       await sendMessage({  
         image: file,
         text: text.trim() 
       })
       }
       if (text && !file) {
-        await sendMessage({ 
+        await sendText({   
           text: text.trim() ,
         });
       }

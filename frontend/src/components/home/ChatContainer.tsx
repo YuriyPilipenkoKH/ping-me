@@ -33,12 +33,18 @@ const ChatContainer = () => {
 
   const handleRightClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault(); // Prevent the default context menu from appearing
-    console.log("Right-clicked on the div!");
-    
-    // Example: Show a custom context menu (replace this with your logic)
-    alert("Custom context menu triggered!");
+    // Retrieve the ID of the div
+    const divId = e.currentTarget.id;
+
+    // Find the image element inside the clicked div
+    const imgElement = e.currentTarget.querySelector("img");
+
+    // Get the `src` of the image, if it exists
+    const imgSrc = imgElement ? imgElement.src : null;
+
+    console.log("Div ID:", divId);
+    console.log("Image src:", imgSrc);
   };
-  
 
   if (isMessagesLoading) {
     return (
@@ -81,7 +87,8 @@ const ChatContainer = () => {
             </div>
             <div 
               className="chat-bubble flex flex-col"
-              onContextMenu={(e) => handleRightClick(e)}>
+              onContextMenu={(e) => handleRightClick(e)}
+              id={message._id}>
               {message.image && (
                 <img
                   src={message.image}

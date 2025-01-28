@@ -80,14 +80,13 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
   sendMessage: async (data) => {
     set({ isMessageSending:true })
     const { selectedUser, messages } = get();
-
     try {
 
-      const res =await axios.post(`/messages/send/${selectedUser?._id}`,
+      const res = 
+      await axios.post(`/messages/send/${selectedUser?._id}`,
         data);
       if(res.data){
-        toast.success(res.data.message);
-        set({ messages: [...messages, res.data] });
+         set({ messages: [...messages, res.data] });
         }
 
     } catch (error: unknown) {
@@ -100,22 +99,22 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
   },
   sendImage: async  (data) => {
     set({ isMessageSending:true })
-    // const {  messages } = get();
+    const { selectedUser, messages } = get();
     try {
       const formData = new FormData();
       formData.append('file', data.image);
-      const response = await axios.post(`/messages/upload-pic`, formData,{
-          headers: { "Content-Type": "multipart/form-data", },
-      });
-      if(response.data){
-      toast.success(response.data.message);
-      }
-      return response.data.secure_url
+      const res =
+       await axios.post(`/messages/upload-pic/${selectedUser?._id}`, 
+        formData,
+        { headers: { "Content-Type": "multipart/form-data", },});
+      if(res.data){
+        set({ messages: [...messages, res.data] });
+       }
+      return res.data.secure_url
 
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {
         toast.error(error.response.data.message);
-        return ''
     }}
     finally{
       set({ isMessageSending:false })

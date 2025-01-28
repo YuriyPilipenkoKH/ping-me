@@ -49,11 +49,12 @@ const MessageInput = () => {
       const uploadresult =  await sendImage({image: file,})
         setSecureUrl(uploadresult)
       }
-      
-      await sendMessage({ 
-        text: text.trim() ,
-        image: secureUrl,
-      });
+      if (text) {
+        await sendMessage({ 
+          text: text.trim() ,
+          image: secureUrl,
+        });
+      }
       // Clear form
       setText("")
       setImagePreview(null);

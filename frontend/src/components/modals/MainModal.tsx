@@ -2,12 +2,15 @@
 import React from 'react'
 import { ModalBaseTypes } from '../../types/modalTypes';
 import { cn } from '../../lib/cn';
+import { useChatStore } from '../../store/useChatStore';
 
 interface MainModalProps {
   modalProps: ModalBaseTypes
+  id?: string
 }
 
-const MainModal: React.FC<MainModalProps> = ({modalProps}) => {
+const MainModal: React.FC<MainModalProps> = ({modalProps, id}) => {
+  const {deleteMessage} = useChatStore()
   const {
     modalName, 
     title,
@@ -20,6 +23,11 @@ const MainModal: React.FC<MainModalProps> = ({modalProps}) => {
       console.error("Modal element not found");
     }
   }
+
+  const  confirm =async(e:React.FormEvent) => {
+    // e.preventDefault();
+    if(id) await deleteMessage(id)
+  }
   return (
   <>
    <button 
@@ -30,10 +38,18 @@ const MainModal: React.FC<MainModalProps> = ({modalProps}) => {
     <dialog id="my_modal_3" className="modal ">
   
       <div className="modal-box flex items-center justify-between px-20">
-          <h3 className="font-bold text-lg">{title}</h3>
-        <form method="dialog">
+          <div>
+            <h3 className="font-bold text-lg">{title}</h3>
+            <span>{id}</span>
+          </div>
+        <form method="dialog"
+        onSubmit={confirm}>
+          
           {modalName === 'DeletingMessageConfirm' && (
-            <button className='btn btn-secondary'>Confirm</button>
+            <button 
+            className='btn btn-secondary text-lg'
+            >
+              Confirm</button>
             )}
           <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         </form>

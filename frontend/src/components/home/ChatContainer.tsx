@@ -15,19 +15,21 @@ const ChatContainer = () => {
     getMessages,
     isMessagesLoading,  
     selectedUser,
+    deleteMessage,
     subscribeToMessages,
     unsubscribeFromMessages,
   } = useChatStore();
   const { authUser } = useAuthStore();
   const messageEndRef = useRef<HTMLDivElement>(null);
   const [showMenu, setShowMenu] = useState<boolean>(false)
+  const [messageId, setMessageId] = useState<string>('')
 
 
   useEffect(() => {
     getMessages(selectedUser?._id || "");
     subscribeToMessages();
     return () => unsubscribeFromMessages();
-  }, [selectedUser?._id, getMessages, subscribeToMessages, unsubscribeFromMessages]);
+  }, [selectedUser?._id, getMessages, subscribeToMessages, unsubscribeFromMessages, deleteMessage]);
 
   useEffect(() => {
     if (messageEndRef.current && messages) {
@@ -49,6 +51,9 @@ const ChatContainer = () => {
     console.log("ImageSrc:", imgSrc);
 
     setShowMenu(!showMenu)
+    setMessageId(divId)
+
+
     const modal = document.getElementById('my_modal_3') as HTMLDialogElement | null;
     if (modal) modal.showModal();
  
@@ -112,7 +117,9 @@ const ChatContainer = () => {
       </div>
 
       <MessageInput />
-      <MainModal modalProps={DeletingMessageConfirmProps}/>
+      <MainModal 
+      modalProps={DeletingMessageConfirmProps}
+      id={messageId}/>
       {/* <Menu/> */}
     </div>
   );

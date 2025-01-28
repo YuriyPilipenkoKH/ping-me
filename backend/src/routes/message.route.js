@@ -12,7 +12,7 @@ router.get('/users', protectRoute , getUsersForSidebar );
 
 router.get('/:id', protectRoute , getMessages );
 
-router.post('/upload-pic', protectRoute , upload.single('file'), multerUploader );
+router.post('/upload-pic/:id', protectRoute , upload.single('file'), multerUploader );
 
 router.post('/send/:id', protectRoute, sendMessage );
 

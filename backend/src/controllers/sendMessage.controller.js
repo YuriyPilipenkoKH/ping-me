@@ -23,4 +23,5 @@ export const sendMessage = async (req, res) => {
         console.log("error in sendMessage controller");
         return res.status(500).json({ message: 'Server error' });
     }
+    
   }

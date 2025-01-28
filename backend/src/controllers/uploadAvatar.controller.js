@@ -23,10 +23,10 @@ export const uploadAvatar = async (req, res) => {
         const fileStream = cloudinary.uploader.upload_stream(
           {
               folder: `ping-me/users/${userId}`,
-              // public_id: userId,
+              public_id: userId,
               overwrite: true,
-              use_filename: true,
-              unique_filename: false,
+              // use_filename: true,
+              // unique_filename: false,
           },
           (error, result) => {
             if (error) {

@@ -1,4 +1,5 @@
 import cloudinary from "../lib/cloudinary.js";
+import { getReceiverSocketId, io } from "../lib/socket.js";
 import Message from "../models/message.model.js";
 
 export const sendMessage = async (req, res) => {
@@ -47,7 +48,12 @@ export const sendMessage = async (req, res) => {
 
     await newMessage.save();
 
-    // Return success response
+    //real time logic
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
+
     return res.status(200).json(newMessage);
   } catch (error) {
     console.error("Error during file upload:", error);

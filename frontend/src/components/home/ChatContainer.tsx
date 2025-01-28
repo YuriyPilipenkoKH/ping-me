@@ -5,6 +5,8 @@ import { formatMessageTime } from '../../lib/formatMessageTime';
 import MessageInput from './MessageInput';
 import ChatHeader from './ChatHeader';
 import MessageSkeleton from '../skeletons/MessageSkeleton';
+import MainModal from '../modals/MainModal';
+import { DeletingMessageConfirmProps } from '../../data/modalProps';
 
 const ChatContainer = () => {
   const {
@@ -43,6 +45,10 @@ const ChatContainer = () => {
 
     console.log("DivID:", divId);
     console.log("ImageSrc:", imgSrc);
+
+    const modal = document.getElementById('my_modal_3') as HTMLDialogElement | null;
+    if (modal) modal.showModal();
+ 
   };
 
   if (isMessagesLoading) {
@@ -102,6 +108,7 @@ const ChatContainer = () => {
       </div>
 
       <MessageInput />
+      <MainModal modalProps={DeletingMessageConfirmProps}/>
     </div>
   );
 }

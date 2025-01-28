@@ -1,17 +1,18 @@
 
 import React from 'react'
 import { ModalBaseTypes } from '../../types/modalTypes';
+import { cn } from '../../lib/cn';
 
 interface MainModalProps {
-  modalTypes: ModalBaseTypes
+  modalProps: ModalBaseTypes
 }
 
-const MainModal: React.FC<MainModalProps> = ({modalTypes}) => {
+const MainModal: React.FC<MainModalProps> = ({modalProps}) => {
   const {
-    // modalName, 
+    modalName, 
     text, 
     title,
-} = modalTypes
+} = modalProps
   const click = () => {
     const modal = document.getElementById('my_modal_3') as HTMLDialogElement | null;
     if (modal) {
@@ -21,22 +22,28 @@ const MainModal: React.FC<MainModalProps> = ({modalTypes}) => {
     }
   }
   return (
-
-<>
-  <button className="btn" onClick={click}>open modal</button>
-  <dialog id="my_modal_3" className="modal">
-
-    <div className="modal-box">
-      <form method="dialog">
-        {/* if there is a button in form, it will close the modal */}
-        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-      </form>
-      <h3 className="font-bold text-lg">{title}</h3>
-      <p className="py-4">{text}</p>
-    </div>
-  </dialog>
-</>
+  <>
+   <button 
+   className={cn("btn",
+    modalName === 'DeletingMessageConfirm' && 'hidden'
+   )} onClick={click}>open modal</button>
+    <dialog id="my_modal_3" className="modal">
+  
+      <div className="modal-box">
+        <form method="dialog">
+          {/* if there is a button in form, it will close the modal */}
+          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+        <h3 className="font-bold text-lg">{title}</h3>
+        <p className="py-4">{text}</p>
+      </div>
+    </dialog>
+  </>
   )
-}
+
+
+  }
+
+
 
 export default MainModal

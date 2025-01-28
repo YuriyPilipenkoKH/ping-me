@@ -15,7 +15,6 @@ const ChatContainer = () => {
     getMessages,
     isMessagesLoading,  
     selectedUser,
-    // deleteMessage, 
     subscribeToMessages,
     unsubscribeFromMessages,
   } = useChatStore();

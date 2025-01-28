@@ -36,10 +36,10 @@ const MainModal: React.FC<MainModalProps> = ({modalProps, id}) => {
 
     <dialog id="my_modal_3" className="modal ">
   
-      <div className="modal-box flex items-center justify-between px-20">
+      <div className="modal-box flex flex-col items-center justify-between gap-10  w-48 py-16 md:flex md:flex-row md:py-8 md:px-12 md:w-[400px]">
           <div>
             <h3 className="font-bold text-lg">{title}</h3>
-            <span>{id}</span>
+            {/* <span>{id}</span> */}
           </div>
         <form method="dialog"
         onSubmit={confirm}>

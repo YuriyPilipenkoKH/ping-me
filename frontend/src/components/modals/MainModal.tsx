@@ -24,8 +24,7 @@ const MainModal: React.FC<MainModalProps> = ({modalProps, id}) => {
     }
   }
 
-  const  confirm =async(e:React.FormEvent) => {
-    // e.preventDefault();
+  const  confirm =async() => {
     if(id) await deleteMessage(id)
   }
   return (

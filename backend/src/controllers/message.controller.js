@@ -1,7 +1,7 @@
 import cloudinary from "../lib/cloudinary.js"
 import Message from "../models/message.model.js"
 import User from "../models/user.model.js"
-
+import { getReceiverSocketId, io } from "../lib/socket.js";
 
 export const getUsersForSidebar = async (req,res) => {
   try {
@@ -70,6 +70,13 @@ export const deleteMessage =  async (req,res) => {
     if (del.deletedCount === 0) {
       return res.status(404).json({ message: 'Message not found' });
     }
+
+    //real time logic
+    // const receiverSocketId = getReceiverSocketId(receiverId);
+    // if (receiverSocketId) {
+    //   io.to(receiverSocketId).emit("newMessage", newMessage);
+    // }
+
     res.status(200).json({
       message: 'Message successfully removed',
     });
@@ -80,4 +87,3 @@ export const deleteMessage =  async (req,res) => {
 
 }
 
-//DivID: 6798b23001ba85a893435a82

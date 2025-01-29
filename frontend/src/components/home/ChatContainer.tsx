@@ -17,7 +17,8 @@ const ChatContainer = () => {
     selectedUser,
     subscribeToMessages,
     unsubscribeFromMessages,
-    subscribeToDelete
+    subscribeToDelete,
+    unsubscribeFromDelete
   } = useChatStore();
   const { authUser } = useAuthStore();
   const messageEndRef = useRef<HTMLDivElement>(null);
@@ -29,7 +30,10 @@ const ChatContainer = () => {
     getMessages(selectedUser?._id || "");
     subscribeToMessages();
     subscribeToDelete();
-    return () => unsubscribeFromMessages();
+    return () => {
+      unsubscribeFromMessages()
+      unsubscribeFromDelete()
+    }
   }, [selectedUser?._id, getMessages, subscribeToMessages, unsubscribeFromMessages, subscribeToDelete]);
 
   useEffect(() => {

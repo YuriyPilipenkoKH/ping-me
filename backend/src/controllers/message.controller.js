@@ -71,15 +71,15 @@ export const sendMessage =  async (req,res) => {
 
 export const deleteMessage =  async (req,res) => {
   // const { id } = req.params;
-  const { messageId: id, receiverId } = req.body;
+  const { messageId, receiverId } = req.body;
   const myId = req.user._id
   const report = {
-    messageId: id,
-    senderId:myId,
+    messageId,
+    senderId: myId,
     receiverId
   }
   try {
-    const del= await Message.deleteOne({ _id: id });
+    const del= await Message.deleteOne({ _id: messageId });
 
     if (del.deletedCount === 0) {
       return res.status(404).json({ message: 'Message not found' });

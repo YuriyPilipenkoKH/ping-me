@@ -29,6 +29,10 @@ const MainModal: React.FC<MainModalProps> = ({
       console.error("Modal element not found");
     }
   }
+  const shut = () => {
+    const modal = document.getElementById('my_modal_3') as HTMLDialogElement | null;
+    if (modal) modal.close()
+  }
 
   const  confirm =async() => {
     if(data ) await deleteMessage(data )
@@ -56,7 +60,10 @@ const MainModal: React.FC<MainModalProps> = ({
             >
               Confirm</button>
             )}
-          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          <button 
+          type='button'
+          onClick={shut}
+          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         </form>
       </div>
     </dialog>

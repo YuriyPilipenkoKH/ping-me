@@ -55,6 +55,13 @@ export const sendMessage =  async (req,res) => {
       image:imageUrl
      })
      await newMessage.save()
+
+     const receiverSocketId = getReceiverSocketId(receiverId);
+     if (receiverSocketId) {
+       io.to(receiverSocketId).emit("newMessage", newMessage);
+     }
+ 
+
   return res.status(200).json(newMessage)
   } catch (error) {
     console.log("error in sendMessage controller");
@@ -65,17 +72,22 @@ export const sendMessage =  async (req,res) => {
 export const deleteMessage =  async (req,res) => {
   // const { id } = req.params;
   const { messageId: id, receiverId } = req.body;
+  // const messageToDelete = {
+  //   messageId: id,
+  //   receiverId
+  // }
   try {
-    const del = await Message.deleteOne({ _id: id });
+    const del= await Message.deleteOne({ _id: id });
 
     if (del.deletedCount === 0) {
       return res.status(404).json({ message: 'Message not found' });
     }
+    // console.log('messageToDelete',messageToDelete);
 
     //real time logic
     const receiverSocketId = getReceiverSocketId(receiverId);
     if (receiverSocketId) {
-      io.to(receiverSocketId).emit("messageDeleted", del);
+      io.to(receiverSocketId).emit("messageDeleted", id);
     }
 
     res.status(200).json({

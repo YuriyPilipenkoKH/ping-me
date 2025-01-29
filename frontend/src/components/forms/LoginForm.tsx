@@ -4,7 +4,7 @@ import { loginSchema, LoginSchemaType } from '../../models/loginSchema'
 import { useForm } from 'react-hook-form'
 import { cn } from '../../lib/cn'
 import { useAuthStore } from '../../store/useAuthStore'
-import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare, User } from "lucide-react";
+import { Eye, EyeOff} from "lucide-react";
 
 
 const LoginForm = () => {
@@ -33,7 +33,7 @@ const LoginForm = () => {
 
     const onSubmit = async (data: LoginSchemaType) => {
       const response = await logIn(data)
-      // if(response) reset()
+      if(response) reset()
       }
     const handleInputChange =   (field: keyof LoginSchemaType) => {
       if(logError) setLogError('')
@@ -60,7 +60,7 @@ const LoginForm = () => {
               {...register('password', 
               { onChange: handleInputChange })}
               placeholder=	{( isSubmitting )? "Processing" : "•••••"}
-              type = {!show ? 'text' : 'password' }
+              type = {show ? 'text' : 'password' }
               />
                <button
           type="button"

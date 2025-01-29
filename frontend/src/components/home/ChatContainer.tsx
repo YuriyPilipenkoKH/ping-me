@@ -24,6 +24,7 @@ const ChatContainer = () => {
   const messageEndRef = useRef<HTMLDivElement>(null);
   const [showMenu, setShowMenu] = useState<boolean>(false)
   const [messageId, setMessageId] = useState<string>('')
+  const [imgUrl, setImgUrl] = useState<string | undefined>(undefined)
 
 
   useEffect(() => {
@@ -50,14 +51,14 @@ const ChatContainer = () => {
     // Find the image element inside the clicked div
     const imgElement = e.currentTarget.querySelector("img");
     // Get the `src` of the image, if it exists
-    const imgSrc = imgElement ? imgElement.src : null;
+    const imgSrc = imgElement ? imgElement.src : undefined;
 
     console.log("DivID:", divId);
     console.log("ImageSrc:", imgSrc);
 
     setShowMenu(!showMenu)
     setMessageId(divId)
-
+    setImgUrl(imgSrc)
 
     const modal = document.getElementById('my_modal_3') as HTMLDialogElement | null;
     if (modal) modal.showModal();
@@ -125,7 +126,8 @@ const ChatContainer = () => {
       <MainModal 
       modalProps={DeletingMessageConfirmProps}
       messageId={messageId}
-      receiverId={selectedUser?._id}/>
+      receiverId={selectedUser?._id}
+      imgUrl={imgUrl}/>
       {/* <Menu/> */}
     </div>
   );

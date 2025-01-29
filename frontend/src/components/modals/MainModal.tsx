@@ -8,19 +8,21 @@ interface MainModalProps {
   modalProps: ModalBaseTypes
   messageId: string
   receiverId?: string
+  imgUrl?: string
 }
 
 const MainModal: React.FC<MainModalProps> = ({
   modalProps, 
   messageId,
-  receiverId}) => {
+  receiverId,
+  imgUrl}) => {
   const {deleteMessage} = useChatStore()
   const {
     modalName, 
     title,
 } = modalProps
 
-  const data = {  messageId,    receiverId }
+  const data = {  messageId, receiverId, imgUrl}
   const click = () => {
     const modal = document.getElementById('my_modal_3') as HTMLDialogElement | null;
     if (modal) {

@@ -71,20 +71,21 @@ export const sendMessage =  async (req,res) => {
 
 export const deleteMessage =  async (req,res) => {
   // const { id } = req.params;
-  const { messageId, receiverId } = req.body;
+  const { messageId, receiverId , imgUrl} = req.body;
   const myId = req.user._id
   const report = {
     messageId,
     senderId: myId,
     receiverId
   }
+  console.log('imgUrl',imgUrl);
   try {
     const del= await Message.deleteOne({ _id: messageId });
 
     if (del.deletedCount === 0) {
       return res.status(404).json({ message: 'Message not found' });
     }
-    // console.log('messageToDelete',messageToDelete);
+
 
     //real time logic
     const receiverSocketId = getReceiverSocketId(receiverId);

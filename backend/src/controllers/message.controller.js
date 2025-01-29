@@ -64,6 +64,7 @@ export const sendMessage =  async (req,res) => {
 
 export const deleteMessage =  async (req,res) => {
   const { id } = req.params;
+  const {receiverId} = req.body
   try {
     const del = await Message.deleteOne({ _id: id });
 
@@ -72,13 +73,13 @@ export const deleteMessage =  async (req,res) => {
     }
 
     //real time logic
-    // const receiverSocketId = getReceiverSocketId(receiverId);
-    // if (receiverSocketId) {
-    //   io.to(receiverSocketId).emit("newMessage", newMessage);
-    // }
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("deleteMessage", del);
+    }
 
     res.status(200).json({
-      message: 'Message successfully removed',
+      message: 'Message removed',
     });
   } catch (error) {
     console.log("error in deleteMessage controller"+error);

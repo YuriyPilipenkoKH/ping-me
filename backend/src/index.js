@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 import express from 'express';
-import {storage, upload} from "./lib/multer.js"
 import {app, server} from './lib/socket.js'
 import authRoutes from './routes/auth.route.js';
 import messageRoutes from './routes/message.route.js';

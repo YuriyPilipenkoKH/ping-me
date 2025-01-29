@@ -69,7 +69,9 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
     const socket = useAuthStore.getState().socket;
 
     socket?.on("newMessage", (newMessage) => {
-      console.log('newMessage',newMessage);
+      console.log('senderId',newMessage.senderId);
+      console.log('selectedUser._id',selectedUser._id)
+
       const isMessageSentFromSelectedUser = newMessage.senderId === selectedUser._id;
       if (!isMessageSentFromSelectedUser) return;
 
@@ -173,8 +175,10 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
     const socket = useAuthStore.getState().socket;
     if (!socket) return;
 
-    socket.on("messageDeleted", (messageId) => {
-    console.log('data',messageId);
+    socket.on("messageDeleted", (data) => {
+      const {messageId, receiverId} = data
+    console.log('messageId',messageId);
+    console.log('receiverId',receiverId);
 
     // const isMessageSentFromSelectedUser = receiverId === selectedUser._id;
     // if (!isMessageSentFromSelectedUser) return;

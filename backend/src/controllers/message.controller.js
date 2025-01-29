@@ -72,10 +72,10 @@ export const sendMessage =  async (req,res) => {
 export const deleteMessage =  async (req,res) => {
   // const { id } = req.params;
   const { messageId: id, receiverId } = req.body;
-  // const messageToDelete = {
-  //   messageId: id,
-  //   receiverId
-  // }
+  const report = {
+    messageId: id,
+    receiverId
+  }
   try {
     const del= await Message.deleteOne({ _id: id });
 
@@ -87,7 +87,7 @@ export const deleteMessage =  async (req,res) => {
     //real time logic
     const receiverSocketId = getReceiverSocketId(receiverId);
     if (receiverSocketId) {
-      io.to(receiverSocketId).emit("messageDeleted", id);
+      io.to(receiverSocketId).emit("messageDeleted", report);
     }
 
     res.status(200).json({

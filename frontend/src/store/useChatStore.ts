@@ -73,6 +73,7 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
       console.log('selectedUser._id',selectedUser._id)
 
       const isMessageSentFromSelectedUser = newMessage.senderId === selectedUser._id;
+      console.log(isMessageSentFromSelectedUser);
       if (!isMessageSentFromSelectedUser) return;
 
       set({
@@ -176,13 +177,14 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
     if (!socket) return;
 
     socket.on("messageDeleted", (data) => {
-      const {messageId, receiverId} = data
-    console.log('messageId',messageId);
-    console.log('receiverId',receiverId);
+      const {messageId,  senderId} = data
+    // console.log('messageId',messageId);
+    // console.log('senderId',receiverId);
 
-    // const isMessageSentFromSelectedUser = receiverId === selectedUser._id;
-    // if (!isMessageSentFromSelectedUser) return;
-      // Ensure the deleted message is removed from the state
+    const isMessageSentFromSelectedUser = senderId === selectedUser._id;
+ 
+    if (!isMessageSentFromSelectedUser) return;
+   
       set({
         messages: get().messages.filter((message) => message._id !== messageId),
       });

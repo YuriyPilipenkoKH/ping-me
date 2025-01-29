@@ -72,8 +72,10 @@ export const sendMessage =  async (req,res) => {
 export const deleteMessage =  async (req,res) => {
   // const { id } = req.params;
   const { messageId: id, receiverId } = req.body;
+  const myId = req.user._id
   const report = {
     messageId: id,
+    senderId:myId,
     receiverId
   }
   try {

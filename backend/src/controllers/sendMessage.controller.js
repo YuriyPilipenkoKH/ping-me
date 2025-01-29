@@ -36,6 +36,7 @@ export const sendMessage = async (req, res) => {
       });
 
       imageUrl = uploadResponse.secure_url; // Store the uploaded file URL
+      // console.log('uploadResponse',uploadResponse);
     }
 
     // Create and save the new message

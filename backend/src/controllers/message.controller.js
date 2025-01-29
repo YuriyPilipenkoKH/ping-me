@@ -78,13 +78,22 @@ export const deleteMessage =  async (req,res) => {
     senderId: myId,
     receiverId
   }
-  console.log('imgUrl',imgUrl);
+  // console.log('imgUrl',imgUrl);
   try {
     const del= await Message.deleteOne({ _id: messageId });
 
     if (del.deletedCount === 0) {
       return res.status(404).json({ message: 'Message not found' });
     }
+   // If imgUrl exists, delete the image from Cloudinary
+   if (imgUrl) {
+      // Extract the public ID correctly from Cloudinary URL
+      const publicId = imgUrl
+        .replace(/^.*\/ping-me\/users\//, "ping-me/users/") // Keep folder structure
+        .replace(/\.[^.]+$/, ""); // Remove file extension
+    await cloudinary.uploader.destroy(publicId);
+    // console.log(`Image ${publicId} deleted from Cloudinary`);
+  }
 
 
     //real time logic

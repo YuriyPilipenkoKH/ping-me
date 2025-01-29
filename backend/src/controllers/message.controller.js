@@ -75,7 +75,7 @@ export const deleteMessage =  async (req,res) => {
     //real time logic
     const receiverSocketId = getReceiverSocketId(receiverId);
     if (receiverSocketId) {
-      io.to(receiverSocketId).emit("deleteMessage", del);
+      io.to(receiverSocketId).emit("messageDeleted", del);
     }
 
     res.status(200).json({

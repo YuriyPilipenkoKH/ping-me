@@ -23,6 +23,7 @@ interface useChatStoreTypes {
   sendImage:  (data: img) => Promise<void>
   sendText:  (data: txt) => Promise<void>
   deleteMessage:  (data: del) => Promise<void>
+  subscribeToDelete: () => void;
 }
 
 export const useChatStore = create<useChatStoreTypes>((set, get) => ({
@@ -163,5 +164,14 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
   finally{
     set({ isMessageSending:false })
   }
-}
+  },
+  subscribeToDelete: () => {
+    const { selectedUser } = get();
+    if (!selectedUser) return;
+    const socket = useAuthStore.getState().socket;
+
+    socket?.on("messageDeleted", ({ messageId }) => {
+      get().deleteMessage(messageId);
+    });
+  }
 }))

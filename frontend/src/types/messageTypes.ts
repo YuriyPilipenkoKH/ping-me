@@ -18,5 +18,9 @@ export interface img {
 export interface txt {
   text: string
 }
+export interface del {
+  messageId: string
+  receiverId?: string
+}
 
 

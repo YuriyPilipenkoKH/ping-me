@@ -63,8 +63,8 @@ export const sendMessage =  async (req,res) => {
 }
 
 export const deleteMessage =  async (req,res) => {
-  const { id } = req.params;
-  const {receiverId} = req.body
+  // const { id } = req.params;
+  const { messageId: id, receiverId } = req.body;
   try {
     const del = await Message.deleteOne({ _id: id });
 

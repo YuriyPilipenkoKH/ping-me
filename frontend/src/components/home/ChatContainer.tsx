@@ -118,7 +118,8 @@ const ChatContainer = () => {
       <MessageInput />
       <MainModal 
       modalProps={DeletingMessageConfirmProps}
-      id={messageId}/>
+      messageId={messageId}
+      receiverId={selectedUser?._id}/>
       {/* <Menu/> */}
     </div>
   );

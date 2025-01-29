@@ -6,15 +6,21 @@ import { useChatStore } from '../../store/useChatStore';
 
 interface MainModalProps {
   modalProps: ModalBaseTypes
-  id?: string
+  messageId: string
+  receiverId?: string
 }
 
-const MainModal: React.FC<MainModalProps> = ({modalProps, id}) => {
+const MainModal: React.FC<MainModalProps> = ({
+  modalProps, 
+  messageId,
+  receiverId}) => {
   const {deleteMessage} = useChatStore()
   const {
     modalName, 
     title,
 } = modalProps
+
+  const data = {  messageId,    receiverId }
   const click = () => {
     const modal = document.getElementById('my_modal_3') as HTMLDialogElement | null;
     if (modal) {
@@ -25,7 +31,7 @@ const MainModal: React.FC<MainModalProps> = ({modalProps, id}) => {
   }
 
   const  confirm =async() => {
-    if(id) await deleteMessage(id)
+    if(data ) await deleteMessage(data )
   }
   return (
   <>

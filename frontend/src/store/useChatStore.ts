@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import toast from "react-hot-toast";
 import { User } from "../types/userTypes";
-import { img, Message, MessageInput, txt } from "../types/messageTypes";
+import { del, img, Message, MessageInput, txt } from "../types/messageTypes";
 import  { AxiosError } from "axios";
 import { axios } from "../lib/axios";
 import { useAuthStore } from "./useAuthStore";
@@ -22,7 +22,7 @@ interface useChatStoreTypes {
   sendMessage:  (data: MessageInput) => Promise<void>
   sendImage:  (data: img) => Promise<void>
   sendText:  (data: txt) => Promise<void>
-  deleteMessage:  (data: string) => Promise<void>
+  deleteMessage:  (data: del) => Promise<void>
 }
 
 export const useChatStore = create<useChatStoreTypes>((set, get) => ({
@@ -144,13 +144,15 @@ export const useChatStore = create<useChatStoreTypes>((set, get) => ({
     set({ isMessageSending:false })
   }
   },
-  deleteMessage: async (id) => {
+  deleteMessage: async (data) => {
+    const {messageId} = data
+
     set({ isMessageSending:true })
       try {
-      await axios.delete(`/messages/delete/${id}`);
+      await axios.delete(`/messages/delete`,{data});
       // Update the messages state by filtering out the deleted message
       set({
-        messages: get().messages.filter((message) => message._id !== id),
+        messages: get().messages.filter((message) => message._id !== messageId),
       });
       // toast.success("Message deleted");
     } catch (error: unknown) {

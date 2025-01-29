@@ -16,7 +16,7 @@ router.post('/send-message/:id', protectRoute , upload.single('file'),  sendMess
 
 router.post('/send/:id', protectRoute, sendText );
 
-router.delete('/delete/:id', protectRoute, deleteMessage );
+router.delete('/delete/', protectRoute, deleteMessage );
 
 
 export default router;

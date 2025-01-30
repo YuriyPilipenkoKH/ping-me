@@ -10,7 +10,9 @@ import capitalize from '../lib/capitalize';
 import { io, Socket } from "socket.io-client";
 import { img } from '../types/messageTypes';
 
-const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:5000" : "/";
+const API = import.meta.env.VITE_API
+console.log('API',API); 
+const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:5000" : API;
 
 interface AuthStoreTypes {
   authUser: User | null 

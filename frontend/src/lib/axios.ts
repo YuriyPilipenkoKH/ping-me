@@ -1,11 +1,11 @@
 import axiosInstance  from 'axios'
 
-const API = import.meta.env.VITE_API
+const HOST = import.meta.env.VITE_HOST;
 
 
 export const axios = axiosInstance.create({
-  // baseURL: import.meta.env.MODE === "development" ? "http:///api" : `${API}/api`,
-  baseURL:  `${API}/api`,
+  
+  baseURL:  `${HOST}/api`,
   withCredentials:true,
   headers: { "Content-Type": "application/json" }
 })

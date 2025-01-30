@@ -6,7 +6,8 @@ import * as path from "path";
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: "../public"  // Change the output directory from "dist" to "public"
+    outDir: "../public",
+    emptyOutDir: true  
   },
   resolve: {
     alias: {

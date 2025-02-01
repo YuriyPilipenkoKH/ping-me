@@ -78,7 +78,6 @@ export const useAuthStore = create<AuthStoreTypes>((set,get) => ({
   
   },
   logIn : async (data) => {
-    console.log('data',data);
     set({ isLoggingIn: true });
   
     try {

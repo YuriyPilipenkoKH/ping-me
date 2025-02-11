@@ -4,7 +4,7 @@ import {  useForm } from 'react-hook-form'
 import { signUpSchemaType ,signUpSchema} from '../../models/signUpSchema'
 import { cn } from '../../lib/cn'
 import { useAuthStore } from '../../store/useAuthStore'
-import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare, User } from "lucide-react";
+import { Eye, EyeOff, } from "lucide-react";
 
 
 export const SignUpForm = () => {

@@ -1,7 +1,10 @@
 import { MessageSquare } from 'lucide-react'
 
+interface LogoProps {
+  title : string
+}
 
-const Logo = () => {
+const Logo:React.FC<LogoProps> = ({title}) => {
   return (
     <div className="text-center mb-8">
     <div className="flex flex-col items-center gap-2 group">
@@ -11,7 +14,7 @@ const Logo = () => {
       >
         <MessageSquare className="size-6 text-primary" />
       </div>
-      <h1 className="text-2xl font-bold mt-2">Create Account</h1>
+      <h1 className="text-2xl font-bold mt-2">{title}</h1>
         </div>
   </div>
   )
